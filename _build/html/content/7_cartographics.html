@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>7.1 Dados Geográficos: GeoJSON e TopoJSON &#8212; My sample book</title>
+    <title>7. Visualização Cartográfica &#8212; My sample book</title>
   
   
   
@@ -135,7 +135,7 @@
     
   
 
-<a class="navbar-brand logo" href="intro.html">
+<a class="navbar-brand logo" href="introduction.html">
   
   
   
@@ -163,7 +163,7 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="intro.html">
+                <a class="reference internal" href="introduction.html">
                     Introdução
                 </a>
             </li>
@@ -174,9 +174,23 @@
 
 <li class="toctree-l1"><a class="reference internal" href="3_transform.html">3. Transformação de dados</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_scales.html">4. Escalas, Eixos e Legendas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_composition.html"><font color="gray">5.</font> Composição de Múltiplas Visualizações</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_composition.html">5 Composição de Múltiplas Visualizações</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_interaction.html">6. Interação</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">7.1 Dados Geográficos: GeoJSON e TopoJSON</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Visualização Cartográfica</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Guia de Depuração para Altair</a></li>
 </ul>
 
@@ -360,7 +374,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>7.1 Dados Geográficos: GeoJSON e TopoJSON</h1>
+    <h1>7. Visualização Cartográfica</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -370,6 +384,7 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dados-geograficos-geojson-e-topojson">7.1 Dados Geográficos: GeoJSON e TopoJSON</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marcas-de-geoforma"><font color="gray">7.2</font> Marcas de Geoforma</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-pontos">7.3. Mapas de Pontos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-simbolos"><font color="gray">7.4</font> Mapas de Símbolos</a></li>
@@ -378,6 +393,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#um-tour-pelos-tipos-especificos-de-projecoes"><font color="gray">7.6.1 </font> Um Tour pelos Tipos Específicos de Projeções</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coda-tratamento-de-dados-geograficos">7.7 Coda: Tratamento de Dados Geográficos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumo">7.8 Resumo</a></li>
 </ul>
             </nav>
         </div>
@@ -389,8 +406,31 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="dados-geograficos-geojson-e-topojson">
-<h1>7.1 Dados Geográficos: GeoJSON e TopoJSON<a class="headerlink" href="#dados-geograficos-geojson-e-topojson" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="visualizacao-cartografica">
+<h1>7. Visualização Cartográfica<a class="headerlink" href="#visualizacao-cartografica" title="Link to this heading">#</a></h1>
+<p><em>“A criação de mapas é um dos empreendimentos intelectuais mais antigos da humanidade e também um dos mais complexos, com teoria científica, representação gráfica, fatos geográficos e considerações práticas combinados de maneiras infinitas.”</em> — <a class="reference external" href="https://books.google.com/books?id=cVy1Ms43fFYC">H. J. Steward</a></p>
+<p>Cartografia – o estudo e a prática da criação de mapas – tem uma história rica que abrange séculos de descobertas e design. A visualização cartográfica aproveita técnicas de mapeamento para transmitir dados contendo informações espaciais, como localizações, rotas ou trajetórias na superfície da Terra.</p>
+<div style="float: right; margin-left: 1em; margin-top: 1em;"><img width="300px" src="https://gist.githubusercontent.com/jheer/c90d582ef5322582cf4960ec7689f6f6/raw/8dc92382a837ccc34c076f4ce7dd864e7893324a/latlon.png" /></div>
+<p>Aproximando a Terra como uma esfera, podemos denotar posições usando um sistema de coordenadas esféricas de <em>latitude</em> (ângulo em graus ao norte ou ao sul do <em>equador</em>) e <em>longitude</em> (ângulo em graus especificando a posição leste-oeste). Neste sistema, um <em>paralelo</em> é um círculo de latitude constante e um <em>meridiano</em> é um círculo de longitude constante. O <a class="reference external" href="https://en.wikipedia.org/wiki/Prime_meridian"><em>meridiano principal</em></a> está em 0° de longitude e, por convenção, é definido para passar pelo Royal Observatory em Greenwich, Inglaterra.</p>
+<p>Para “achatar” uma esfera tridimensional em um plano bidimensional, devemos aplicar uma <a class="reference external" href="https://en.wikipedia.org/wiki/Map_projection">projeção</a> que mapeia pares (<code class="docutils literal notranslate"><span class="pre">longitude</span></code>, <code class="docutils literal notranslate"><span class="pre">latitude</span></code>) para coordenadas (<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>). Semelhante às <a class="reference external" href="https://github.com/uwdata/visualization-curriculum/blob/master/altair_scales_axes_legends.ipynb">escalas</a>, as projeções mapeiam de um domínio de dados (posição espacial) para um intervalo visual (posição em pixels). No entanto, os mapeamentos de escala que vimos até agora aceitam um domínio unidimensional, enquanto as projeções de mapas são inerentemente bidimensionais.</p>
+<p>Neste <em>notebook</em>, apresentaremos o básico sobre a criação de mapas e visualização de dados espaciais com Altair, incluindo:</p>
+<ul class="simple">
+<li><p>Formatos de dados para representar características geográficas,</p></li>
+<li><p>Técnicas de geo-visualização, como mapas de pontos, símbolos e coropléticos, e</p></li>
+<li><p>Uma revisão das projeções cartográficas mais comuns.</p></li>
+</ul>
+<p><em>Este notebook faz parte do <a class="reference external" href="https://github.com/uwdata/visualization-curriculum">currículo de visualização de dados</a>.</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">altair</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">alt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">vega_datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="dados-geograficos-geojson-e-topojson">
+<h2>7.1 Dados Geográficos: GeoJSON e TopoJSON<a class="headerlink" href="#dados-geograficos-geojson-e-topojson" title="Link to this heading">#</a></h2>
 <p>Até esse ponto, trabalhamos com datasets formatados em JSON e CSV, que correspondem a tabelas de dados feitas de linhas (registros) e colunas (campos). Com o objetivo de representar regiões geográficas (países, estados, <em>etc.</em>) e trajetórias (rotas de voo, linhas de metrô, <em>etc.</em>), precisamos  expandir nosso repertório com formatos adicionais projetados para suportar geometrias ricas.</p>
 <p>O <a class="reference external" href="https://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a> modela recursos geográficos com umformato JSON especializado. Um <code class="docutils literal notranslate"><span class="pre">feature</span></code> GeoJSON pode incluir dados geométricos – tal como coordenadas de <code class="docutils literal notranslate"><span class="pre">longitude</span></code> e <code class="docutils literal notranslate"><span class="pre">latitude</span></code>, que constituem a fronteira de um país – assim como atributos de dados adicionais.</p>
 <p>Aqui está um objeto <code class="docutils literal notranslate"><span class="pre">feature</span></code> GeoJSON para o Colorado, um estado americano:</p>
@@ -419,13 +459,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">world</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">world_110m</span><span class="o">.</span><span class="n">url</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">world</span>
-
-<span class="ne">NameError</span>: name &#39;data&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json&#39;
 </pre></div>
 </div>
 </div>
@@ -482,6 +516,17 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UrlData({
+  format: TopoDataFormat({
+    feature: &#39;countries&#39;,
+    type: &#39;topojson&#39;
+  }),
+  url: &#39;https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json&#39;
+})
+</pre></div>
+</div>
+</div>
 </div>
 <p>Essa chamada de método <code class="docutils literal notranslate"><span class="pre">alt.topo_feature</span></code> se expande para o seguinte JSON do Vega-Lite:</p>
 <div class="cell docutils container">
@@ -493,8 +538,15 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;values&#39;: &#39;https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json&#39;,
+ &#39;format&#39;: {&#39;type&#39;: &#39;topojson&#39;, &#39;feature&#39;: &#39;countries&#39;}}
+</pre></div>
+</div>
+</div>
 </div>
 <p>Agora que podemos carregar dados geográficos, estamos prontos para começar a fazer mapas!</p>
+</section>
 <section id="marcas-de-geoforma">
 <h2><font color="gray">7.2</font> Marcas de Geoforma<a class="headerlink" href="#marcas-de-geoforma" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
@@ -507,29 +559,48 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<div id="altair-viz-ded4d19b935a4b7187f34bfa41e0981a"></div>
+<style>
+  #altair-viz-f8d4135ec01348d1889982b73b672a94.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-f8d4135ec01348d1889982b73b672a94.vega-embed details,
+  #altair-viz-f8d4135ec01348d1889982b73b672a94.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-f8d4135ec01348d1889982b73b672a94"></div>
 <script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-ded4d19b935a4b7187f34bfa41e0981a") {
-      outputDiv = document.getElementById("altair-viz-ded4d19b935a4b7187f34bfa41e0981a");
+    if (outputDiv.id !== "altair-viz-f8d4135ec01348d1889982b73b672a94") {
+      outputDiv = document.getElementById("altair-viz-f8d4135ec01348d1889982b73b672a94");
     }
+
     const paths = {
-      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
-      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
-      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
     };
 
-    function loadScript(lib) {
-      return new Promise(function(resolve, reject) {
-        var s = document.createElement('script');
-        s.src = paths[lib];
-        s.async = true;
-        s.onload = () => resolve(paths[lib]);
-        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-        document.getElementsByTagName("head")[0].appendChild(s);
-      });
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
     }
 
     function showError(err) {
@@ -544,17 +615,16 @@
 
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
-      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else if (typeof vegaEmbed === "function") {
-      displayChart(vegaEmbed);
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
     } else {
-      loadScript("vega")
-        .then(() => loadScript("vega-lite"))
-        .then(() => loadScript("vega-embed"))
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": "geoshape", "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape"}, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json"}, {"mode": "vega-lite"});
 </script></div></div>
 </div>
 <p>No exemplo acima, o Altair aplica uma cor azul padrão e usa uma projeção de mapa padrão (<code class="docutils literal notranslate"><span class="pre">mercator</span></code>). Podemos personalizar as cores e as larguras das bordas usando propriedades padrão de marca. Usando o método <code class="docutils literal notranslate"><span class="pre">project</span></code>, também podemos adicionar nossa própria projeção de mapa:</p>
@@ -570,29 +640,48 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<div id="altair-viz-7f5ee9d649f146379b5c5fb0140fedc5"></div>
+<style>
+  #altair-viz-b98a551e65994427b81c38abe5e53ed3.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-b98a551e65994427b81c38abe5e53ed3.vega-embed details,
+  #altair-viz-b98a551e65994427b81c38abe5e53ed3.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-b98a551e65994427b81c38abe5e53ed3"></div>
 <script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7f5ee9d649f146379b5c5fb0140fedc5") {
-      outputDiv = document.getElementById("altair-viz-7f5ee9d649f146379b5c5fb0140fedc5");
+    if (outputDiv.id !== "altair-viz-b98a551e65994427b81c38abe5e53ed3") {
+      outputDiv = document.getElementById("altair-viz-b98a551e65994427b81c38abe5e53ed3");
     }
+
     const paths = {
-      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
-      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
-      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
     };
 
-    function loadScript(lib) {
-      return new Promise(function(resolve, reject) {
-        var s = document.createElement('script');
-        s.src = paths[lib];
-        s.async = true;
-        s.onload = () => resolve(paths[lib]);
-        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-        document.getElementsByTagName("head")[0].appendChild(s);
-      });
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
     }
 
     function showError(err) {
@@ -607,17 +696,16 @@
 
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
-      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else if (typeof vegaEmbed === "function") {
-      displayChart(vegaEmbed);
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
     } else {
-      loadScript("vega")
-        .then(() => loadScript("vega-lite"))
-        .then(() => loadScript("vega-embed"))
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}, "projection": {"type": "mercator"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}, "projection": {"type": "mercator"}, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json"}, {"mode": "vega-lite"});
 </script></div></div>
 </div>
 <p>Por padrão, o Altair ajusta automaticamente a projeção para que todos os dados caibam dentro da largura e altura do gráfico. Também podemos especificar parâmetros de projeção, como <code class="docutils literal notranslate"><span class="pre">scale</span></code> (nível de zoom) e <code class="docutils literal notranslate"><span class="pre">translate</span></code> (panorama), para personalizar as configurações da projeção. Aqui, ajustamos os parâmetros <code class="docutils literal notranslate"><span class="pre">scale</span></code> e <code class="docutils literal notranslate"><span class="pre">translate</span></code> para focar na Europa:</p>
@@ -633,29 +721,48 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<div id="altair-viz-91718abd2285427c868a1d36c8906462"></div>
+<style>
+  #altair-viz-916e49498cd04183b19c850ddc8b71e3.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-916e49498cd04183b19c850ddc8b71e3.vega-embed details,
+  #altair-viz-916e49498cd04183b19c850ddc8b71e3.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-916e49498cd04183b19c850ddc8b71e3"></div>
 <script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-91718abd2285427c868a1d36c8906462") {
-      outputDiv = document.getElementById("altair-viz-91718abd2285427c868a1d36c8906462");
+    if (outputDiv.id !== "altair-viz-916e49498cd04183b19c850ddc8b71e3") {
+      outputDiv = document.getElementById("altair-viz-916e49498cd04183b19c850ddc8b71e3");
     }
+
     const paths = {
-      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
-      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
-      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
     };
 
-    function loadScript(lib) {
-      return new Promise(function(resolve, reject) {
-        var s = document.createElement('script');
-        s.src = paths[lib];
-        s.async = true;
-        s.onload = () => resolve(paths[lib]);
-        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-        document.getElementsByTagName("head")[0].appendChild(s);
-      });
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
     }
 
     function showError(err) {
@@ -670,20 +777,19 @@
 
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
-      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else if (typeof vegaEmbed === "function") {
-      displayChart(vegaEmbed);
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
     } else {
-      loadScript("vega")
-        .then(() => loadScript("vega-lite"))
-        .then(() => loadScript("vega-embed"))
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}, "projection": {"scale": 400, "translate": [100, 550], "type": "mercator"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}, "projection": {"scale": 400, "translate": [100, 550], "type": "mercator"}, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json"}, {"mode": "vega-lite"});
 </script></div></div>
 </div>
-<p><em>Observe como a resolução de 110m dos dados se torna aparente nesse nível de escala. Para ver linhas de costa e fronteiras mais detalhadas, precisamos de um arquivo de entrada com geometrias mais detalhadas. Ajuste os parâmetros <code class="docutils literal notranslate"><span class="pre">scale</span></code> e <code class="docutils literal notranslate"><span class="pre">translate</span></code> para focar o mapa em outras regiões!</em></p>
+<p><em>Observe como a resolução de 110m dos dados se torna aparente neste nível de escala. Para ver linhas de costa e fronteiras mais detalhadas, precisamos de um arquivo de entrada com geometrias mais detalhadas. Ajuste os parâmetros <code class="docutils literal notranslate"><span class="pre">scale</span></code> e <code class="docutils literal notranslate"><span class="pre">translate</span></code> para focar o mapa em outras regiões!</em></p>
 <p>Até agora, nosso mapa mostra apenas países. Usando o operador <code class="docutils literal notranslate"><span class="pre">layer</span></code>, podemos combinar múltiplos elementos do mapa. O Altair inclui <em>geradores de dados</em> que podemos usar para criar dados para camadas adicionais do mapa:</p>
 <ul class="simple">
 <li><p>O gerador de esfera (<code class="docutils literal notranslate"><span class="pre">{'sphere':</span> <span class="pre">True}</span></code>) fornece uma representação GeoJSON da esfera completa da Terra. Podemos criar uma marca <code class="docutils literal notranslate"><span class="pre">geoshape</span></code> adicional que preenche a forma da Terra como uma camada de fundo.</p></li>
@@ -724,29 +830,48 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html">
-<div id="altair-viz-a1af16eb42d9496f991ca8d2b7926e27"></div>
+<style>
+  #altair-viz-a878a030c1054d698cacad9b1a265eed.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-a878a030c1054d698cacad9b1a265eed.vega-embed details,
+  #altair-viz-a878a030c1054d698cacad9b1a265eed.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-a878a030c1054d698cacad9b1a265eed"></div>
 <script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-a1af16eb42d9496f991ca8d2b7926e27") {
-      outputDiv = document.getElementById("altair-viz-a1af16eb42d9496f991ca8d2b7926e27");
+    if (outputDiv.id !== "altair-viz-a878a030c1054d698cacad9b1a265eed") {
+      outputDiv = document.getElementById("altair-viz-a878a030c1054d698cacad9b1a265eed");
     }
+
     const paths = {
-      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
-      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
-      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
-      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.20.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
     };
 
-    function loadScript(lib) {
-      return new Promise(function(resolve, reject) {
-        var s = document.createElement('script');
-        s.src = paths[lib];
-        s.async = true;
-        s.onload = () => resolve(paths[lib]);
-        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
-        document.getElementsByTagName("head")[0].appendChild(s);
-      });
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
     }
 
     function showError(err) {
@@ -761,17 +886,16 @@
 
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
-      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
-    } else if (typeof vegaEmbed === "function") {
-      displayChart(vegaEmbed);
+      let deps = ["vega-embed"];
+      require(deps, displayChart, err => showError(`Error loading script: ${err.message}`));
     } else {
-      loadScript("vega")
-        .then(() => loadScript("vega-lite"))
-        .then(() => loadScript("vega-embed"))
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.20.1"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
         .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null}}, "layer": [{"data": {"sphere": true}, "mark": {"type": "geoshape", "fill": "#e6f3ff"}}, {"data": {"graticule": true}, "mark": {"type": "geoshape", "stroke": "#ffffff", "strokeWidth": 1}}, {"data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}}], "height": 400, "projection": {"scale": 110, "translate": [300, 200], "type": "naturalEarth1"}, "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300, "stroke": null}}, "layer": [{"data": {"sphere": true}, "mark": {"type": "geoshape", "fill": "#e6f3ff"}}, {"data": {"graticule": true}, "mark": {"type": "geoshape", "stroke": "#ffffff", "strokeWidth": 1}}, {"data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}}], "height": 400, "projection": {"scale": 110, "translate": [300, 200], "type": "naturalEarth1"}, "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json"}, {"mode": "vega-lite"});
 </script></div></div>
 </div>
 </section>
@@ -783,6 +907,11 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zipcodes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">zipcodes</span><span class="o">.</span><span class="n">url</span>
 <span class="n">zipcodes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/zipcodes.csv&#39;
 </pre></div>
 </div>
 </div>
@@ -801,6 +930,14 @@
 <span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
     <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+    <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span>    <span class="c1"># aplica o campo chamado &#39;latitude&#39; para o canal &quot;latitude&quot;.</span>
+             <span class="o">^</span>
+<span class="ne">SyntaxError</span>: invalid syntax. Perhaps you forgot a comma?
 </pre></div>
 </div>
 </div>
@@ -1176,6 +1313,21 @@
 </ul>
 </section>
 </section>
+<section id="coda-tratamento-de-dados-geograficos">
+<h2>7.7 Coda: Tratamento de Dados Geográficos<a class="headerlink" href="#coda-tratamento-de-dados-geograficos" title="Link to this heading">#</a></h2>
+<p>Os exemplos acima são todos retirados da coleção vega-datasets, incluindo dados geométricos (TopoJSON) e tabulares (aeroportos, taxas de desemprego). Um desafio comum para começar com visualização geográfica é coletar os dados necessários para sua tarefa. Existem vários provedores de dados, incluindo serviços como o <a class="reference external" href="https://www.usgs.gov/products/data-and-tools/data-and-tools-topics">United States Geological Survey</a> e o <a class="reference external" href="https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html">U.S. Census Bureau</a>.</p>
+<p>Em muitos casos, você pode já ter dados existentes com um componente geográfico, mas precisar de medidas ou geometria adicionais. Para ajudar você a começar, aqui está um fluxo de trabalho:</p>
+<ol class="arabic simple">
+<li><p>Visite <a class="reference external" href="http://www.naturalearthdata.com/downloads/">Natural Earth Data</a> e navegue para selecionar dados para regiões e resoluções de seu interesse. Baixe o(s) arquivo(s) zip correspondentes.</p></li>
+<li><p>Vá para <a class="reference external" href="https://mapshaper.org/">MapShaper</a> e arraste seu arquivo zip baixado para a página. Revise os dados conforme desejado e depois “Exporte” os arquivos TopoJSON ou GeoJSON gerados.</p></li>
+<li><p>Carregue os dados exportados do MapShaper para usar com o Altair!</p></li>
+</ol>
+<p>Claro, muitas outras ferramentas – tanto de código aberto quanto proprietárias – existem para trabalhar com dados geográficos. Para mais informações sobre tratamento de dados geográficos e criação de mapas, veja a série de tutoriais de Mike Bostock sobre <a class="reference external" href="https://medium.com/&#64;mbostock/command-line-cartography-part-1-897aa8f8ca2c">Command-Line Cartography</a>.</p>
+</section>
+<section id="resumo">
+<h2>7.8 Resumo<a class="headerlink" href="#resumo" title="Link to this heading">#</a></h2>
+<p>Neste ponto, nós apenas começamos a explorar o universo da criação de mapas.(Você não esperava que um único capítulo transmitisse séculos de aprendizado, né?) Por exemplo, deixamos de lado tópicos como <a class="reference external" href="https://en.wikipedia.org/wiki/Cartogram"><em>cartogramas</em></a> e a representação de <a class="reference external" href="https://en.wikipedia.org/wiki/Topography"><em>topografia</em></a> — como no livro esclarecedor de Imhof, <a class="reference external" href="https://books.google.com/books?id=cVy1Ms43fFYC"><em>Cartographic Relief Presentation</em></a>. No entanto, agora você deve estar bem equipado para criar uma rica variedade de geo-visualizações. Para mais informações, o livro de MacEachren <a class="reference external" href="https://books.google.com/books?id=xhAvN3B0CkUC"><em>How Maps Work: Representation, Visualization, and Design</em></a> oferece uma visão valiosa sobre a criação de mapas sob a perspectiva da visualização de dados.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1243,6 +1395,7 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dados-geograficos-geojson-e-topojson">7.1 Dados Geográficos: GeoJSON e TopoJSON</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marcas-de-geoforma"><font color="gray">7.2</font> Marcas de Geoforma</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-pontos">7.3. Mapas de Pontos</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-simbolos"><font color="gray">7.4</font> Mapas de Símbolos</a></li>
@@ -1251,6 +1404,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#um-tour-pelos-tipos-especificos-de-projecoes"><font color="gray">7.6.1 </font> Um Tour pelos Tipos Específicos de Projeções</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coda-tratamento-de-dados-geograficos">7.7 Coda: Tratamento de Dados Geográficos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumo">7.8 Resumo</a></li>
 </ul>
   </nav></div>
 

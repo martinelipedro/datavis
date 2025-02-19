@@ -63,7 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/debugging';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="7.1 Dados Geográficos: GeoJSON e TopoJSON" href="7_cartographics.html" />
+    <link rel="prev" title="7. Visualização Cartográfica" href="7_cartographics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -134,7 +134,7 @@
     
   
 
-<a class="navbar-brand logo" href="intro.html">
+<a class="navbar-brand logo" href="introduction.html">
   
   
   
@@ -162,7 +162,7 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="intro.html">
+                <a class="reference internal" href="introduction.html">
                     Introdução
                 </a>
             </li>
@@ -173,9 +173,23 @@
 
 <li class="toctree-l1"><a class="reference internal" href="3_transform.html">3. Transformação de dados</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_scales.html">4. Escalas, Eixos e Legendas</a></li>
-<li class="toctree-l1"><a class="reference internal" href="5_composition.html"><font color="gray">5.</font> Composição de Múltiplas Visualizações</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_composition.html">5 Composição de Múltiplas Visualizações</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_interaction.html">6. Interação</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7_cartographics.html">7.1 Dados Geográficos: GeoJSON e TopoJSON</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="7_cartographics.html">7. Visualização Cartográfica</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Guia de Depuração para Altair</a></li>
 </ul>
 
@@ -384,7 +398,7 @@
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propriedades-sendo-ignoradas">Propriedades Sendo Ignoradas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pedindo-por-ajuda">Pedindo por Ajuda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pedindo-socorro">Pedindo Socorro</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reportando-problemas">Reportando Problemas</a></li>
 </ul>
             </nav>
@@ -1108,7 +1122,7 @@ Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-pac
 </section>
 <section id="propriedades-sendo-ignoradas">
 <h2>Propriedades Sendo Ignoradas<a class="headerlink" href="#propriedades-sendo-ignoradas" title="Link to this heading">#</a></h2>
-<p>O Altair pode ignorar alguma propriedade especificada. No gráfico abaixo, nós estamos usando um canal <code class="docutils literal notranslate"><span class="pre">text</span></code>, o qual somente é compatível com <code class="docutils literal notranslate"><span class="pre">mark_text</span></code>. Você não vê um erro ou um aviso sobre isso no notebook. No entanto, a biblioteca Vega-Lite subjacente irá mostrar um aviso no seu navegador. Aperte <kbd>Alt</kbd>+<kbd>Cmd</kbd>+<kbd>I</kbd> no Mac ou <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>I</kbd> no Windows e Linux para abrir as ferramentas de desenvolvedor e clique na aba <code class="docutils literal notranslate"><span class="pre">Console</span></code>. Quando você executar o exemplo na célula abaixo, você verá  o aviso que segue.</p>
+<p>O Altair pode ignorar alguma propriedade especificada. No gráfico abaixo, nós estamos usando um canal <code class="docutils literal notranslate"><span class="pre">text</span></code>, o qual somente é compatível com <code class="docutils literal notranslate"><span class="pre">mark_text</span></code>. Você não vê um erro ou um aviso sobre isso no capítulo. No entanto, a biblioteca Vega-Lite subjacente irá mostrar um aviso no seu navegador. Aperte <kbd>Alt</kbd>+<kbd>Cmd</kbd>+<kbd>I</kbd> no Mac ou <kbd>Alt</kbd>+<kbd>Ctrl</kbd>+<kbd>I</kbd> no Windows e Linux para abrir as ferramentas de desenvolvedor e clique na aba <code class="docutils literal notranslate"><span class="pre">Console</span></code>. Quando você executar o exemplo na célula abaixo, você verá  o aviso que segue.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WARN</span> <span class="n">text</span> <span class="n">dropped</span> <span class="k">as</span> <span class="n">it</span> <span class="ow">is</span> <span class="n">incompatible</span> <span class="k">with</span> <span class="s2">&quot;bar&quot;</span><span class="o">.</span>
 <span class="p">(</span><span class="n">AVISO</span> <span class="n">texto</span> <span class="n">descartado</span> <span class="n">por</span> <span class="n">ser</span> <span class="n">incompatível</span> <span class="n">com</span> <span class="s2">&quot;bar&quot;</span><span class="p">)</span>
 </pre></div>
@@ -1126,8 +1140,8 @@ Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-pac
 <p>Se você mesmo encontrar problemas de depuração relacionados ao Vega-Lite, você pode abrir o gráfico no <a class="reference external" href="https://vega.github.io/editor/">Editor Vega</a> clicando no link “Open in Vega Editor”(Abrir no Editor Vega) na parte inferior do gráfico ou no menu de ação (clique para abrir) no canto superior direito do gráfico. O Editor Vega fornece depuração adicional, mas você estará escrevendo Vega-Lite JSON em vez de Altair em Python.</p>
 <p><strong>Observação</strong>: O Editor Vega pode estar usando uma versão mais recente do Vega-Lite e, portanto, o comportamento pode variar.</p>
 </section>
-<section id="pedindo-por-ajuda">
-<h2>Pedindo por Ajuda<a class="headerlink" href="#pedindo-por-ajuda" title="Link to this heading">#</a></h2>
+<section id="pedindo-socorro">
+<h2>Pedindo Socorro<a class="headerlink" href="#pedindo-socorro" title="Link to this heading">#</a></h2>
 <p>Se você achar um problema com o Altair e ficar preso nele, você pode fazer uma pergunta no <em>Stack Overflow</em>. Faça sua pergunta com as tags <code class="docutils literal notranslate"><span class="pre">altair</span></code> e <code class="docutils literal notranslate"><span class="pre">vega-lite</span></code>. Você pode encontrar uma lista de questões respondidas anteriormente <a class="reference external" href="https://stackoverflow.com/questions/tagged/altair">aqui</a>.</p>
 </section>
 <section id="reportando-problemas">
@@ -1172,7 +1186,7 @@ Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-pac
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">7.1 Dados Geográficos: GeoJSON e TopoJSON</p>
+        <p class="prev-next-title">7. Visualização Cartográfica</p>
       </div>
     </a>
 </div>
@@ -1207,7 +1221,7 @@ Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.11/dist-pac
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propriedades-sendo-ignoradas">Propriedades Sendo Ignoradas</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pedindo-por-ajuda">Pedindo por Ajuda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pedindo-socorro">Pedindo Socorro</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reportando-problemas">Reportando Problemas</a></li>
 </ul>
   </nav></div>

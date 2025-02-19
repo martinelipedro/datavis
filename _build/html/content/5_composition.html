@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>5. Composição de Múltiplas Visualizações &#8212; My sample book</title>
+    <title>5 Composição de Múltiplas Visualizações &#8212; My sample book</title>
   
   
   
@@ -135,7 +135,7 @@
     
   
 
-<a class="navbar-brand logo" href="intro.html">
+<a class="navbar-brand logo" href="introduction.html">
   
   
   
@@ -163,7 +163,7 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="intro.html">
+                <a class="reference internal" href="introduction.html">
                     Introdução
                 </a>
             </li>
@@ -174,9 +174,23 @@
 
 <li class="toctree-l1"><a class="reference internal" href="3_transform.html">3. Transformação de dados</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_scales.html">4. Escalas, Eixos e Legendas</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><font color="gray">5.</font> Composição de Múltiplas Visualizações</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5 Composição de Múltiplas Visualizações</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_interaction.html">6. Interação</a></li>
-<li class="toctree-l1"><a class="reference internal" href="7_cartographics.html">7.1 Dados Geográficos: GeoJSON e TopoJSON</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="7_cartographics.html">7. Visualização Cartográfica</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Guia de Depuração para Altair</a></li>
 </ul>
 
@@ -360,7 +374,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><font color="gray">5.</font> Composição de Múltiplas Visualizações</h1>
+    <h1>5 Composição de Múltiplas Visualizações</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -370,16 +384,16 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dados-meteorologicos"><font color="gray">5.1</font> Dados Meteorológicos</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camada"><font color="gray">5.2</font> Camada</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eixos-compartilhados"><font color="gray"> 5.2.1 </font> Eixos Compartilhados</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-de-eixo-duplo"><font color="gray"> 5.2.2 </font> Gráficos de Eixo Duplo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dados-meteorologicos">Dados Meteorológicos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camada">Camada</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eixos-compartilhados">Eixos Compartilhados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-de-eixo-duplo-dual-axis-charts">Gráficos de Eixo Duplo (<em>dual-axis charts</em>)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faceta"><font color="gray">5.3</font> Faceta</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacao"><font color="gray"> 5.4 </font> Concatenação</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeticao"><font color="gray"> 5.5 </font> Repetição</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uma-algebra-de-composicao-de-visualizacoes"><font color="gray">5.6</font> Uma Álgebra de Composição de Visualizações</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faceta">Faceta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacao">Concatenação</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeticao">Repetição</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uma-algebra-de-composicao-de-visualizacoes">Uma Álgebra de Composição de Visualizações</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumo"><font color="gray">5.7</font> Resumo</a></li>
 </ul>
             </nav>
@@ -393,7 +407,7 @@
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="composicao-de-multiplas-visualizacoes">
-<h1><font color="gray">5.</font> Composição de Múltiplas Visualizações<a class="headerlink" href="#composicao-de-multiplas-visualizacoes" title="Link to this heading">#</a></h1>
+<h1>5 Composição de Múltiplas Visualizações<a class="headerlink" href="#composicao-de-multiplas-visualizacoes" title="Link to this heading">#</a></h1>
 <hr class="docutils" />
 <p>Ao visualizar vários campos de dados diferentes, podemos ficar tentados a usar tantos canais de codificação visual quanto pudermos: <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">shape</span></code> e assim por diante. No entanto, à medida que o número de canais de codificação aumenta, um gráfico pode rapidamente tornar-se desordenado e difícil de ler. Uma alternativa para “sobrecarregar” um único gráfico é, em vez disso, compor vários gráficos de uma forma que facilite comparações rápidas.</p>
 <p>Neste capítulo, examinaremos uma variedade de operações para composição de múltiplas visualizações:</p>
@@ -414,7 +428,7 @@
 </div>
 </div>
 <section id="dados-meteorologicos">
-<h2><font color="gray">5.1</font> Dados Meteorológicos<a class="headerlink" href="#dados-meteorologicos" title="Link to this heading">#</a></h2>
+<h2>Dados Meteorológicos<a class="headerlink" href="#dados-meteorologicos" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <p>Estaremos visualizando estatísticas meteorológicas para as cidades americanas de Seattle e Nova York. Vamos carregar o conjunto de dados e dar uma olhada nas primeiras e últimas 10 linhas:</p>
 <div class="cell docutils container">
@@ -706,11 +720,11 @@
 <p>Criaremos exibições de multivisualizações para examinar o clima dentro e fora das cidades.</p>
 </section>
 <section id="camada">
-<h2><font color="gray">5.2</font> Camada<a class="headerlink" href="#camada" title="Link to this heading">#</a></h2>
+<h2>Camada<a class="headerlink" href="#camada" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <p>Uma das formas mais comuns de combinar vários gráficos é <em>sobrepor</em> marcas umas sobre as outras. Se os domínios das escalas subjacentes forem compatíveis, podemos mesclá-los para formar <em>eixos compartilhados</em>. Se uma das codificações em <code class="docutils literal notranslate"><span class="pre">x</span></code> ou <code class="docutils literal notranslate"><span class="pre">y</span></code> não for compatível, podemos, em vez disso, criar um gráfico de <em>eixos duplos</em>, que sobrepõe marcas usando escalas e eixos separados.</p>
 <section id="eixos-compartilhados">
-<h3><font color="gray"> 5.2.1 </font> Eixos Compartilhados<a class="headerlink" href="#eixos-compartilhados" title="Link to this heading">#</a></h3>
+<h3>Eixos Compartilhados<a class="headerlink" href="#eixos-compartilhados" title="Link to this heading">#</a></h3>
 <p>Vamos começar plotando as temperaturas médias mínima e máxima por mês:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -725,23 +739,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-89ff6ba8b54944bfa1111374349daa37.vega-embed {
+  #altair-viz-1185f9d84f0d4f0d9b686392f9c7be3b.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-89ff6ba8b54944bfa1111374349daa37.vega-embed details,
-  #altair-viz-89ff6ba8b54944bfa1111374349daa37.vega-embed details summary {
+  #altair-viz-1185f9d84f0d4f0d9b686392f9c7be3b.vega-embed details,
+  #altair-viz-1185f9d84f0d4f0d9b686392f9c7be3b.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-89ff6ba8b54944bfa1111374349daa37"></div>
+<div id="altair-viz-1185f9d84f0d4f0d9b686392f9c7be3b"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-89ff6ba8b54944bfa1111374349daa37") {
-      outputDiv = document.getElementById("altair-viz-89ff6ba8b54944bfa1111374349daa37");
+    if (outputDiv.id !== "altair-viz-1185f9d84f0d4f0d9b686392f9c7be3b") {
+      outputDiv = document.getElementById("altair-viz-1185f9d84f0d4f0d9b686392f9c7be3b");
     }
 
     const paths = {
@@ -808,23 +822,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-e2a284ec9d2e4d3cb38711f3744df974.vega-embed {
+  #altair-viz-096392c8d3ad4581aea00c2814fc4cf8.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-e2a284ec9d2e4d3cb38711f3744df974.vega-embed details,
-  #altair-viz-e2a284ec9d2e4d3cb38711f3744df974.vega-embed details summary {
+  #altair-viz-096392c8d3ad4581aea00c2814fc4cf8.vega-embed details,
+  #altair-viz-096392c8d3ad4581aea00c2814fc4cf8.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-e2a284ec9d2e4d3cb38711f3744df974"></div>
+<div id="altair-viz-096392c8d3ad4581aea00c2814fc4cf8"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e2a284ec9d2e4d3cb38711f3744df974") {
-      outputDiv = document.getElementById("altair-viz-e2a284ec9d2e4d3cb38711f3744df974");
+    if (outputDiv.id !== "altair-viz-096392c8d3ad4581aea00c2814fc4cf8") {
+      outputDiv = document.getElementById("altair-viz-096392c8d3ad4581aea00c2814fc4cf8");
     }
 
     const paths = {
@@ -893,23 +907,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-8c53df3dd6b94c3f931cf855223f4586.vega-embed {
+  #altair-viz-6ec598b0c3374a82919dcbd15687b698.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-8c53df3dd6b94c3f931cf855223f4586.vega-embed details,
-  #altair-viz-8c53df3dd6b94c3f931cf855223f4586.vega-embed details summary {
+  #altair-viz-6ec598b0c3374a82919dcbd15687b698.vega-embed details,
+  #altair-viz-6ec598b0c3374a82919dcbd15687b698.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-8c53df3dd6b94c3f931cf855223f4586"></div>
+<div id="altair-viz-6ec598b0c3374a82919dcbd15687b698"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-8c53df3dd6b94c3f931cf855223f4586") {
-      outputDiv = document.getElementById("altair-viz-8c53df3dd6b94c3f931cf855223f4586");
+    if (outputDiv.id !== "altair-viz-6ec598b0c3374a82919dcbd15687b698") {
+      outputDiv = document.getElementById("altair-viz-6ec598b0c3374a82919dcbd15687b698");
     }
 
     const paths = {
@@ -986,23 +1000,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-507027df09f744fbac139b665fa195c3.vega-embed {
+  #altair-viz-a469b853b0304f9ba76c7f1f64d5e9b8.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-507027df09f744fbac139b665fa195c3.vega-embed details,
-  #altair-viz-507027df09f744fbac139b665fa195c3.vega-embed details summary {
+  #altair-viz-a469b853b0304f9ba76c7f1f64d5e9b8.vega-embed details,
+  #altair-viz-a469b853b0304f9ba76c7f1f64d5e9b8.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-507027df09f744fbac139b665fa195c3"></div>
+<div id="altair-viz-a469b853b0304f9ba76c7f1f64d5e9b8"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-507027df09f744fbac139b665fa195c3") {
-      outputDiv = document.getElementById("altair-viz-507027df09f744fbac139b665fa195c3");
+    if (outputDiv.id !== "altair-viz-a469b853b0304f9ba76c7f1f64d5e9b8") {
+      outputDiv = document.getElementById("altair-viz-a469b853b0304f9ba76c7f1f64d5e9b8");
     }
 
     const paths = {
@@ -1079,23 +1093,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-6131a710d84347a981dcff5f5b271205.vega-embed {
+  #altair-viz-e446a7ff8a1f4585ba307b0d70ba288b.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-6131a710d84347a981dcff5f5b271205.vega-embed details,
-  #altair-viz-6131a710d84347a981dcff5f5b271205.vega-embed details summary {
+  #altair-viz-e446a7ff8a1f4585ba307b0d70ba288b.vega-embed details,
+  #altair-viz-e446a7ff8a1f4585ba307b0d70ba288b.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-6131a710d84347a981dcff5f5b271205"></div>
+<div id="altair-viz-e446a7ff8a1f4585ba307b0d70ba288b"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6131a710d84347a981dcff5f5b271205") {
-      outputDiv = document.getElementById("altair-viz-6131a710d84347a981dcff5f5b271205");
+    if (outputDiv.id !== "altair-viz-e446a7ff8a1f4585ba307b0d70ba288b") {
+      outputDiv = document.getElementById("altair-viz-e446a7ff8a1f4585ba307b0d70ba288b");
     }
 
     const paths = {
@@ -1157,23 +1171,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-ee28abde02d649e0b787436c886fff90.vega-embed {
+  #altair-viz-96b568c026564b96b8b6738d52e58398.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-ee28abde02d649e0b787436c886fff90.vega-embed details,
-  #altair-viz-ee28abde02d649e0b787436c886fff90.vega-embed details summary {
+  #altair-viz-96b568c026564b96b8b6738d52e58398.vega-embed details,
+  #altair-viz-96b568c026564b96b8b6738d52e58398.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-ee28abde02d649e0b787436c886fff90"></div>
+<div id="altair-viz-96b568c026564b96b8b6738d52e58398"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-ee28abde02d649e0b787436c886fff90") {
-      outputDiv = document.getElementById("altair-viz-ee28abde02d649e0b787436c886fff90");
+    if (outputDiv.id !== "altair-viz-96b568c026564b96b8b6738d52e58398") {
+      outputDiv = document.getElementById("altair-viz-96b568c026564b96b8b6738d52e58398");
     }
 
     const paths = {
@@ -1226,8 +1240,8 @@
 </div>
 <p>Observe que a ordem dos elementos em uma camada é importante, pois as camadas subsequentes serão desenhadas sobre as anteriores. <em>Tente trocar a ordem dos gráficos nas células acima. O que acontece? (Dica: preste atenção na cor das marcas de linha (<code class="docutils literal notranslate"><span class="pre">line</span></code>).)</em></p>
 </section>
-<section id="graficos-de-eixo-duplo">
-<h3><font color="gray"> 5.2.2 </font> Gráficos de Eixo Duplo<a class="headerlink" href="#graficos-de-eixo-duplo" title="Link to this heading">#</a></h3>
+<section id="graficos-de-eixo-duplo-dual-axis-charts">
+<h3>Gráficos de Eixo Duplo (<em>dual-axis charts</em>)<a class="headerlink" href="#graficos-de-eixo-duplo-dual-axis-charts" title="Link to this heading">#</a></h3>
 <p><em>Seattle tem a reputação de ser uma cidade chuvosa. Será que isso é merecido?</em></p>
 <p>Vamos analisar a precipitação junto com a temperatura para entender melhor. Primeiro, vamos criar um gráfico básico que mostra a precipitação média mensal em Seattle:</p>
 <div class="cell docutils container">
@@ -1247,23 +1261,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-7a1a032af1f94b4aa6a200b5a2827254.vega-embed {
+  #altair-viz-8c47bea5aa434f86a7bbac153d2df9f2.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-7a1a032af1f94b4aa6a200b5a2827254.vega-embed details,
-  #altair-viz-7a1a032af1f94b4aa6a200b5a2827254.vega-embed details summary {
+  #altair-viz-8c47bea5aa434f86a7bbac153d2df9f2.vega-embed details,
+  #altair-viz-8c47bea5aa434f86a7bbac153d2df9f2.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-7a1a032af1f94b4aa6a200b5a2827254"></div>
+<div id="altair-viz-8c47bea5aa434f86a7bbac153d2df9f2"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-7a1a032af1f94b4aa6a200b5a2827254") {
-      outputDiv = document.getElementById("altair-viz-7a1a032af1f94b4aa6a200b5a2827254");
+    if (outputDiv.id !== "altair-viz-8c47bea5aa434f86a7bbac153d2df9f2") {
+      outputDiv = document.getElementById("altair-viz-8c47bea5aa434f86a7bbac153d2df9f2");
     }
 
     const paths = {
@@ -1314,7 +1328,7 @@
   })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@1/data/weather.csv"}, "mark": {"type": "line", "interpolate": "monotone", "stroke": "grey"}, "encoding": {"x": {"field": "date", "timeUnit": "month", "title": null, "type": "temporal"}, "y": {"aggregate": "average", "field": "precipitation", "title": "Precipitation", "type": "quantitative"}}, "transform": [{"filter": "datum.location == \"Seattle\""}], "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json"}, {"mode": "vega-lite"});
 </script></div></div>
 </div>
-<p>Para facilitar a comparação com os dados de temperatura, vamos criar um novo gráfico em camadas. Aqui está o que acontece se tentarmos sobrepor os gráficos da mesma forma que fizemos anteriormente:</p>
+<p>Para facilitar a comparação com os dados de temperatura, vamos criar um novo gráfico em camadas (<em>layered chart</em>). Aqui está o que acontece se tentarmos sobrepor os gráficos da mesma forma que fizemos anteriormente:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tempMinMax</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">weather</span><span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
@@ -1342,23 +1356,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-b96c45c192294c8681b546efead422c2.vega-embed {
+  #altair-viz-f18c51b76ee1454cb647ae6fce7d0a47.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-b96c45c192294c8681b546efead422c2.vega-embed details,
-  #altair-viz-b96c45c192294c8681b546efead422c2.vega-embed details summary {
+  #altair-viz-f18c51b76ee1454cb647ae6fce7d0a47.vega-embed details,
+  #altair-viz-f18c51b76ee1454cb647ae6fce7d0a47.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-b96c45c192294c8681b546efead422c2"></div>
+<div id="altair-viz-f18c51b76ee1454cb647ae6fce7d0a47"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b96c45c192294c8681b546efead422c2") {
-      outputDiv = document.getElementById("altair-viz-b96c45c192294c8681b546efead422c2");
+    if (outputDiv.id !== "altair-viz-f18c51b76ee1454cb647ae6fce7d0a47") {
+      outputDiv = document.getElementById("altair-viz-f18c51b76ee1454cb647ae6fce7d0a47");
     }
 
     const paths = {
@@ -1410,7 +1424,7 @@
 </script></div></div>
 </div>
 <p><em>Os valores de precipitação utilizam um intervalo muito menor no eixo y do que as temperaturas!</em></p>
-<p>Por padrão, gráficos em camadas utilizam um <code class="docutils literal notranslate"><span class="pre">domínio</span> <span class="pre">compartilhado</span></code>: os valores para o eixo x ou y são combinados entre todas as camadas para determinar uma extensão compartilhada. Esse comportamento padrão assume que os valores das camadas têm as mesmas unidades. No entanto, isso não se aplica a este exemplo, pois estamos combinando valores de temperatura (graus Celsius) com valores de precipitação (polegadas)!</p>
+<p>Por padrão, gráficos em camadas (<em>layered charts</em>) utilizam um <code class="docutils literal notranslate"><span class="pre">domínio</span> <span class="pre">compartilhado</span></code>: os valores para o eixo x ou y são combinados entre todas as camadas para determinar uma extensão compartilhada. Esse comportamento padrão assume que os valores das camadas têm as mesmas unidades. No entanto, isso não se aplica a este exemplo, pois estamos combinando valores de temperatura (graus Celsius) com valores de precipitação (polegadas)!</p>
 <p>Se quisermos usar escalas diferentes para o eixo y, precisamos especificar como desejamos que o Altair <em>resolva</em> os dados entre as camadas. Neste caso, queremos que os domínios das escalas (<code class="docutils literal notranslate"><span class="pre">scale</span></code>) do eixo y sejam independentes (<code class="docutils literal notranslate"><span class="pre">independent</span></code>), em vez de usar um domínio compartilhado (<code class="docutils literal notranslate"><span class="pre">shared</span></code>). O objeto <code class="docutils literal notranslate"><span class="pre">Chart</span></code> gerado por um operador de camada inclui um método <code class="docutils literal notranslate"><span class="pre">resolve_scale</span></code> (resolve escala) com o qual podemos especificar a resolução desejada.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1439,23 +1453,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-18e0300b682147feaa4766f6bd4936a7.vega-embed {
+  #altair-viz-998522cbd0f544b0860652aaae2ef3c0.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-18e0300b682147feaa4766f6bd4936a7.vega-embed details,
-  #altair-viz-18e0300b682147feaa4766f6bd4936a7.vega-embed details summary {
+  #altair-viz-998522cbd0f544b0860652aaae2ef3c0.vega-embed details,
+  #altair-viz-998522cbd0f544b0860652aaae2ef3c0.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-18e0300b682147feaa4766f6bd4936a7"></div>
+<div id="altair-viz-998522cbd0f544b0860652aaae2ef3c0"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-18e0300b682147feaa4766f6bd4936a7") {
-      outputDiv = document.getElementById("altair-viz-18e0300b682147feaa4766f6bd4936a7");
+    if (outputDiv.id !== "altair-viz-998522cbd0f544b0860652aaae2ef3c0") {
+      outputDiv = document.getElementById("altair-viz-998522cbd0f544b0860652aaae2ef3c0");
     }
 
     const paths = {
@@ -1507,7 +1521,7 @@
 </script></div></div>
 </div>
 <p><em>Agora podemos ver que o outono é a estação mais chuvosa em Seattle (com pico em novembro), complementado pelos verões secos.</em></p>
-<p>Você pode ter notado certa redundância nas especificações do nosso gráfico acima: ambos usam o mesmo conjunto de dados e o mesmo filtro para exibir apenas Seattle. Se vocês quiser, você pode simplificar um pouco o código fornecendo os dados e a transformação de filtro para o gráfico em camadas de nível superior. As camadas individuais irão herdar os dados se não tiverem suas próprias definições de dados.</p>
+<p>Você pode ter notado certa redundância nas especificações do nosso gráfico acima: ambos usam o mesmo conjunto de dados e o mesmo filtro para exibir apenas Seattle. Se vocês quiser, você pode simplificar um pouco o código fornecendo os dados e a transformação de filtro para o gráfico em camadas (<em>layered chart</em>) de nível superior. As camadas individuais irão herdar os dados se não tiverem suas próprias definições de dados.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tempMinMax</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_area</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
@@ -1533,23 +1547,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-a602dd3063404ed6a0d3702d871e1099.vega-embed {
+  #altair-viz-6ee5325ec79b4cb3a0139571c657234d.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-a602dd3063404ed6a0d3702d871e1099.vega-embed details,
-  #altair-viz-a602dd3063404ed6a0d3702d871e1099.vega-embed details summary {
+  #altair-viz-6ee5325ec79b4cb3a0139571c657234d.vega-embed details,
+  #altair-viz-6ee5325ec79b4cb3a0139571c657234d.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-a602dd3063404ed6a0d3702d871e1099"></div>
+<div id="altair-viz-6ee5325ec79b4cb3a0139571c657234d"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-a602dd3063404ed6a0d3702d871e1099") {
-      outputDiv = document.getElementById("altair-viz-a602dd3063404ed6a0d3702d871e1099");
+    if (outputDiv.id !== "altair-viz-6ee5325ec79b4cb3a0139571c657234d") {
+      outputDiv = document.getElementById("altair-viz-6ee5325ec79b4cb3a0139571c657234d");
     }
 
     const paths = {
@@ -1600,11 +1614,11 @@
   })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "layer": [{"mark": {"type": "area", "opacity": 0.3}, "encoding": {"x": {"axis": {"format": "%b"}, "field": "date", "timeUnit": "month", "title": null, "type": "temporal"}, "y": {"aggregate": "average", "field": "temp_max", "title": "Avg. Temperature \u00b0C", "type": "quantitative"}, "y2": {"aggregate": "average", "field": "temp_min"}}}, {"mark": {"type": "line", "interpolate": "monotone", "stroke": "grey"}, "encoding": {"x": {"field": "date", "timeUnit": "month", "type": "temporal"}, "y": {"aggregate": "average", "field": "precipitation", "title": "Precipitation", "type": "quantitative"}}}], "data": {"url": "https://cdn.jsdelivr.net/npm/vega-datasets@1/data/weather.csv"}, "resolve": {"scale": {"y": "independent"}}, "transform": [{"filter": "datum.location == \"Seattle\""}], "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json"}, {"mode": "vega-lite"});
 </script></div></div>
 </div>
-<p>Embora gráficos de eixos duplos possam ser úteis, <em>eles são frequentemente propensos a interpretações equivocadas</em>, pois as diferentes unidades e escalas dos eixos podem ser desproporcionais. Sempre que possível, você pode considerar transformações que mapeiem diferentes campos de dados para unidades compartilhadas, como, por exemplo, exibir <a class="reference external" href="https://en.wikipedia.org/wiki/Quantile">quantis</a> ou mudanças percentuais relativas.</p>
+<p>Embora gráficos de eixos duplos (<em>dual-axis charts</em>) possam ser úteis, <em>eles são frequentemente propensos a interpretações equivocadas</em>, pois as diferentes unidades e escalas dos eixos podem ser desproporcionais. Sempre que possível, você pode considerar transformações que mapeiem diferentes campos de dados para unidades compartilhadas, como, por exemplo, exibir <a class="reference external" href="https://en.wikipedia.org/wiki/Quantile">quantis</a> ou mudanças percentuais relativas.</p>
 </section>
 </section>
 <section id="faceta">
-<h2><font color="gray">5.3</font> Faceta<a class="headerlink" href="#faceta" title="Link to this heading">#</a></h2>
+<h2>Faceta<a class="headerlink" href="#faceta" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <p><em>Facetar</em> envolve subdividir um dataset em grupos e criar um gráfico separado para cada grupo. Nos últimos capítulos, aprendemos como criar tabelas facetadas usando os canais de codificação <code class="docutils literal notranslate"><span class="pre">linha</span></code> e <code class="docutils literal notranslate"><span class="pre">coluna</span></code>. Vamos primeiro revisar esses canais e então mostrar como são instâncias de um operador mais geral: a <code class="docutils literal notranslate"><span class="pre">faceta</span></code>.</p>
 <p>Comecemos com um histograma básico acerca dos níveis máximos da temperatura de Seattle:</p>
@@ -1622,23 +1636,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-f85b296da4764ab6aa777c8457a196fc.vega-embed {
+  #altair-viz-04f6dd8bbbf1419a8a58c05199844df9.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-f85b296da4764ab6aa777c8457a196fc.vega-embed details,
-  #altair-viz-f85b296da4764ab6aa777c8457a196fc.vega-embed details summary {
+  #altair-viz-04f6dd8bbbf1419a8a58c05199844df9.vega-embed details,
+  #altair-viz-04f6dd8bbbf1419a8a58c05199844df9.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-f85b296da4764ab6aa777c8457a196fc"></div>
+<div id="altair-viz-04f6dd8bbbf1419a8a58c05199844df9"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-f85b296da4764ab6aa777c8457a196fc") {
-      outputDiv = document.getElementById("altair-viz-f85b296da4764ab6aa777c8457a196fc");
+    if (outputDiv.id !== "altair-viz-04f6dd8bbbf1419a8a58c05199844df9") {
+      outputDiv = document.getElementById("altair-viz-04f6dd8bbbf1419a8a58c05199844df9");
     }
 
     const paths = {
@@ -1715,23 +1729,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-5d46844ec50d4b9db6e79f62e9258ea3.vega-embed {
+  #altair-viz-d424958e00d44e4292ca504c8216092b.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-5d46844ec50d4b9db6e79f62e9258ea3.vega-embed details,
-  #altair-viz-5d46844ec50d4b9db6e79f62e9258ea3.vega-embed details summary {
+  #altair-viz-d424958e00d44e4292ca504c8216092b.vega-embed details,
+  #altair-viz-d424958e00d44e4292ca504c8216092b.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-5d46844ec50d4b9db6e79f62e9258ea3"></div>
+<div id="altair-viz-d424958e00d44e4292ca504c8216092b"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-5d46844ec50d4b9db6e79f62e9258ea3") {
-      outputDiv = document.getElementById("altair-viz-5d46844ec50d4b9db6e79f62e9258ea3");
+    if (outputDiv.id !== "altair-viz-d424958e00d44e4292ca504c8216092b") {
+      outputDiv = document.getElementById("altair-viz-d424958e00d44e4292ca504c8216092b");
     }
 
     const paths = {
@@ -1785,7 +1799,7 @@
 <p><em>Para a surpresa de ninguém, esses raros dias de neve centralizam as temperaturas mais baixas, seguidos por dias chuvosos e nublados. Dias de sol são mais quentes e, apesar dos estereótipos de Seattle, são os mais frequentes. Apesar de que, como qualquer morador de Seattle pode te informar, a garoa vem e volta a qualquer momento e a despeito da temperatura!</em></p>
 <p>Adicionalmente aos canais de codificação <code class="docutils literal notranslate"><span class="pre">linha</span></code> e <code class="docutils literal notranslate"><span class="pre">coluna</span></code>, uma definição de tabelas, podemos usar definições básicas de tabela para aplicar facetamento através de um operador explícito de <code class="docutils literal notranslate"><span class="pre">faceta</span></code>.</p>
 <p>Vamos recriar a tabela acima, mas dessa vez usando <code class="docutils literal notranslate"><span class="pre">faceta</span></code>. Começamos com algumas definições básicas de histograma, mas removemos a fonte das informações, filtro de transformação e canal coluna. Podemos então chamar o método <code class="docutils literal notranslate"><span class="pre">faceta</span></code> passando os dados e especificando que se deve facetar colunas de acordo com o campo <code class="docutils literal notranslate"><span class="pre">clima</span></code>. O método <code class="docutils literal notranslate"><span class="pre">faceta</span></code> aceita tanto <code class="docutils literal notranslate"><span class="pre">linha</span></code> quanto <code class="docutils literal notranslate"><span class="pre">coluna</span></code> como  argumentos. Ambos podem ser usados para criar uma grade 2d de gráficos facetados.</p>
-<p>Por fim, incluímos nossos filtros de transformação, os apliccando ao gráfico da faceta superior. Poderíamos, é claro, aplicar o filtro de transformação à definição de histograma apresentada no início, mas isso seria sensivelmente menos eficiente. Melhor que filtrar valores de “Nova York” dentro de cada célula de faceta, aplicar o filtro ao gráfico facetado permite que o Vega-Lite saiba que podemos filtrar esses valores antecipadamente, antes da divisão das facetas.</p>
+<p>Por fim, incluímos nossos filtros de transformação, os apliccando ao gráfico da faceta superior (<em>faceted plots</em>). Poderíamos, é claro, aplicar o filtro de transformação à definição de histograma apresentada no início, mas isso seria sensivelmente menos eficiente. Melhor que filtrar valores de “Nova York” dentro de cada célula de faceta, aplicar o filtro ao gráfico facetado (<em>faceted plot</em>) permite que o Vega-Lite saiba que podemos filtrar esses valores antecipadamente, antes da divisão das facetas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colors</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
@@ -1812,23 +1826,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-d89d1910345a4361bc78b37bb7a875cb.vega-embed {
+  #altair-viz-60960e07c3764801a9d86a99f263aa58.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-d89d1910345a4361bc78b37bb7a875cb.vega-embed details,
-  #altair-viz-d89d1910345a4361bc78b37bb7a875cb.vega-embed details summary {
+  #altair-viz-60960e07c3764801a9d86a99f263aa58.vega-embed details,
+  #altair-viz-60960e07c3764801a9d86a99f263aa58.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-d89d1910345a4361bc78b37bb7a875cb"></div>
+<div id="altair-viz-60960e07c3764801a9d86a99f263aa58"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-d89d1910345a4361bc78b37bb7a875cb") {
-      outputDiv = document.getElementById("altair-viz-d89d1910345a4361bc78b37bb7a875cb");
+    if (outputDiv.id !== "altair-viz-60960e07c3764801a9d86a99f263aa58") {
+      outputDiv = document.getElementById("altair-viz-60960e07c3764801a9d86a99f263aa58");
     }
 
     const paths = {
@@ -1908,23 +1922,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-edce4d29826c4ec0b46993aec3ba83c0.vega-embed {
+  #altair-viz-ea608814784447e18f92827785f2e958.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-edce4d29826c4ec0b46993aec3ba83c0.vega-embed details,
-  #altair-viz-edce4d29826c4ec0b46993aec3ba83c0.vega-embed details summary {
+  #altair-viz-ea608814784447e18f92827785f2e958.vega-embed details,
+  #altair-viz-ea608814784447e18f92827785f2e958.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-edce4d29826c4ec0b46993aec3ba83c0"></div>
+<div id="altair-viz-ea608814784447e18f92827785f2e958"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-edce4d29826c4ec0b46993aec3ba83c0") {
-      outputDiv = document.getElementById("altair-viz-edce4d29826c4ec0b46993aec3ba83c0");
+    if (outputDiv.id !== "altair-viz-ea608814784447e18f92827785f2e958") {
+      outputDiv = document.getElementById("altair-viz-ea608814784447e18f92827785f2e958");
     }
 
     const paths = {
@@ -2004,23 +2018,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-8d88468a003b450a844ae5fe9cea4597.vega-embed {
+  #altair-viz-2214bf5b40f4479ebaf647c21b9f1cb7.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-8d88468a003b450a844ae5fe9cea4597.vega-embed details,
-  #altair-viz-8d88468a003b450a844ae5fe9cea4597.vega-embed details summary {
+  #altair-viz-2214bf5b40f4479ebaf647c21b9f1cb7.vega-embed details,
+  #altair-viz-2214bf5b40f4479ebaf647c21b9f1cb7.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-8d88468a003b450a844ae5fe9cea4597"></div>
+<div id="altair-viz-2214bf5b40f4479ebaf647c21b9f1cb7"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-8d88468a003b450a844ae5fe9cea4597") {
-      outputDiv = document.getElementById("altair-viz-8d88468a003b450a844ae5fe9cea4597");
+    if (outputDiv.id !== "altair-viz-2214bf5b40f4479ebaf647c21b9f1cb7") {
+      outputDiv = document.getElementById("altair-viz-2214bf5b40f4479ebaf647c21b9f1cb7");
     }
 
     const paths = {
@@ -2100,23 +2114,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-0a2a9fd574d9479aa408510382bd713a.vega-embed {
+  #altair-viz-35acd98f6ff14277a3d8507565c1f127.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-0a2a9fd574d9479aa408510382bd713a.vega-embed details,
-  #altair-viz-0a2a9fd574d9479aa408510382bd713a.vega-embed details summary {
+  #altair-viz-35acd98f6ff14277a3d8507565c1f127.vega-embed details,
+  #altair-viz-35acd98f6ff14277a3d8507565c1f127.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-0a2a9fd574d9479aa408510382bd713a"></div>
+<div id="altair-viz-35acd98f6ff14277a3d8507565c1f127"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-0a2a9fd574d9479aa408510382bd713a") {
-      outputDiv = document.getElementById("altair-viz-0a2a9fd574d9479aa408510382bd713a");
+    if (outputDiv.id !== "altair-viz-35acd98f6ff14277a3d8507565c1f127") {
+      outputDiv = document.getElementById("altair-viz-35acd98f6ff14277a3d8507565c1f127");
     }
 
     const paths = {
@@ -2171,7 +2185,7 @@
 <p>Para tomar um clicê emprestado: só poruque você <em>pode</em> fazer algo, não significa que <em>deveria</em>…</p>
 </section>
 <section id="concatenacao">
-<h2><font color="gray"> 5.4 </font> Concatenação<a class="headerlink" href="#concatenacao" title="Link to this heading">#</a></h2>
+<h2>Concatenação<a class="headerlink" href="#concatenacao" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <p>A técnica de faceting cria <a class="reference external" href="https://en.wikipedia.org/wiki/Small_multiple">múltiplos gráficos pequenos</a> que mostram subdivisões separadas do dado. No entanto, podemos desejar criar uma exibição de multivisualização com diferentes perspectivas do <em>mesmo</em> conjunto de dados (não mais subconjuntos) ou visualizações que envolvem conjuntos de dados <em>distintos</em>.</p>
 <p>O Altair oferece operadores de <em>concatenação</em> para combinar gráficos arbitrários em um único gráfico concatenado. O operador <code class="docutils literal notranslate"><span class="pre">hconcat</span></code> (abreviando, <code class="docutils literal notranslate"><span class="pre">|</span></code> ) realiza uma concatenação horizontal, enquanto o operador <code class="docutils literal notranslate"><span class="pre">vconcat</span></code> (abreviando, <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>) realiza uma concatenação vertical.</p>
@@ -2189,23 +2203,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-b7e3ce311f3247309519a672c7eb64e2.vega-embed {
+  #altair-viz-2e06f44065304a14995cd7d4744f22b4.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-b7e3ce311f3247309519a672c7eb64e2.vega-embed details,
-  #altair-viz-b7e3ce311f3247309519a672c7eb64e2.vega-embed details summary {
+  #altair-viz-2e06f44065304a14995cd7d4744f22b4.vega-embed details,
+  #altair-viz-2e06f44065304a14995cd7d4744f22b4.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-b7e3ce311f3247309519a672c7eb64e2"></div>
+<div id="altair-viz-2e06f44065304a14995cd7d4744f22b4"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-b7e3ce311f3247309519a672c7eb64e2") {
-      outputDiv = document.getElementById("altair-viz-b7e3ce311f3247309519a672c7eb64e2");
+    if (outputDiv.id !== "altair-viz-2e06f44065304a14995cd7d4744f22b4") {
+      outputDiv = document.getElementById("altair-viz-2e06f44065304a14995cd7d4744f22b4");
     }
 
     const paths = {
@@ -2279,23 +2293,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-6a5be9822077444e91c5af537505a00c.vega-embed {
+  #altair-viz-dfae8b7d3ecf4c97b11bcf9e539a9493.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-6a5be9822077444e91c5af537505a00c.vega-embed details,
-  #altair-viz-6a5be9822077444e91c5af537505a00c.vega-embed details summary {
+  #altair-viz-dfae8b7d3ecf4c97b11bcf9e539a9493.vega-embed details,
+  #altair-viz-dfae8b7d3ecf4c97b11bcf9e539a9493.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-6a5be9822077444e91c5af537505a00c"></div>
+<div id="altair-viz-dfae8b7d3ecf4c97b11bcf9e539a9493"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-6a5be9822077444e91c5af537505a00c") {
-      outputDiv = document.getElementById("altair-viz-6a5be9822077444e91c5af537505a00c");
+    if (outputDiv.id !== "altair-viz-dfae8b7d3ecf4c97b11bcf9e539a9493") {
+      outputDiv = document.getElementById("altair-viz-dfae8b7d3ecf4c97b11bcf9e539a9493");
     }
 
     const paths = {
@@ -2353,7 +2367,7 @@
 <p>Como veremos mais tarde, os operadores de concatenação permitem combinar quaisquer gráficos em um dashboard de multivisualização!</p>
 </section>
 <section id="repeticao">
-<h2><font color="gray"> 5.5 </font> Repetição<a class="headerlink" href="#repeticao" title="Link to this heading">#</a></h2>
+<h2>Repetição<a class="headerlink" href="#repeticao" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <p>Os operadores de concatenação são genéricos, permitindo a composição de gráficos arbitrários. No entanto, o exemplo acima ainda possui palavras demais: temos três gráficos muito semelhantes, mas precisamos defini-los separadamente e depois concatená-los.</p>
 <p>Para casos em que apenas uma ou duas variáveis estão mudando, o operador <code class="docutils literal notranslate"><span class="pre">repeat</span></code> proporciona um atalho útil para criar múltiplos gráficos. Dada uma especificação de <em>modelo</em> com algumas variáveis livres, o operador <code class="docutils literal notranslate"><span class="pre">repeat</span></code> criará um gráfico para cada atribuição especificada dessas variáveis.</p>
@@ -2377,23 +2391,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-0edf0696b252469487119ab2ed575748.vega-embed {
+  #altair-viz-210bb26c7976468c996da8fd20ca7686.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-0edf0696b252469487119ab2ed575748.vega-embed details,
-  #altair-viz-0edf0696b252469487119ab2ed575748.vega-embed details summary {
+  #altair-viz-210bb26c7976468c996da8fd20ca7686.vega-embed details,
+  #altair-viz-210bb26c7976468c996da8fd20ca7686.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-0edf0696b252469487119ab2ed575748"></div>
+<div id="altair-viz-210bb26c7976468c996da8fd20ca7686"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-0edf0696b252469487119ab2ed575748") {
-      outputDiv = document.getElementById("altair-viz-0edf0696b252469487119ab2ed575748");
+    if (outputDiv.id !== "altair-viz-210bb26c7976468c996da8fd20ca7686") {
+      outputDiv = document.getElementById("altair-viz-210bb26c7976468c996da8fd20ca7686");
     }
 
     const paths = {
@@ -2468,23 +2482,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-09369a5ae44746e7996f887946cff1e3.vega-embed {
+  #altair-viz-a87e941aa6ec4ceb906357e7bdb04240.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-09369a5ae44746e7996f887946cff1e3.vega-embed details,
-  #altair-viz-09369a5ae44746e7996f887946cff1e3.vega-embed details summary {
+  #altair-viz-a87e941aa6ec4ceb906357e7bdb04240.vega-embed details,
+  #altair-viz-a87e941aa6ec4ceb906357e7bdb04240.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-09369a5ae44746e7996f887946cff1e3"></div>
+<div id="altair-viz-a87e941aa6ec4ceb906357e7bdb04240"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-09369a5ae44746e7996f887946cff1e3") {
-      outputDiv = document.getElementById("altair-viz-09369a5ae44746e7996f887946cff1e3");
+    if (outputDiv.id !== "altair-viz-a87e941aa6ec4ceb906357e7bdb04240") {
+      outputDiv = document.getElementById("altair-viz-a87e941aa6ec4ceb906357e7bdb04240");
     }
 
     const paths = {
@@ -2540,7 +2554,7 @@
 <p><em>Finalmente, para realmente apreciar tudo que o operador</em><code class="docutils literal notranslate"><span class="pre">repeat</span></code> <em>pode oferecer, reserve um momento para imaginar como você pode recriar a SPLOM acima usando apenas</em> <code class="docutils literal notranslate"><span class="pre">hconcat</span></code> <em>e</em> <code class="docutils literal notranslate"><span class="pre">vconcat</span></code><em>!</em></p>
 </section>
 <section id="uma-algebra-de-composicao-de-visualizacoes">
-<h2><font color="gray">5.6</font> Uma Álgebra de Composição de Visualizações<a class="headerlink" href="#uma-algebra-de-composicao-de-visualizacoes" title="Link to this heading">#</a></h2>
+<h2>Uma Álgebra de Composição de Visualizações<a class="headerlink" href="#uma-algebra-de-composicao-de-visualizacoes" title="Link to this heading">#</a></h2>
 <hr class="docutils" />
 <p>Juntos, os operados <code class="docutils literal notranslate"><span class="pre">layer</span></code>, <code class="docutils literal notranslate"><span class="pre">facet</span></code>, <code class="docutils literal notranslate"><span class="pre">concat</span></code> e <code class="docutils literal notranslate"><span class="pre">repeat</span></code> formam uma <em>álgebra de composição de visualizações</em>: diversos operadores podem ser combinados para construir uma variedade de visualizações múltiplas.</p>
 <p>Como exemplo, vamos começar com dois gráficos básicos: um histograma e uma linha simples (uma única marca <code class="docutils literal notranslate"><span class="pre">rule</span></code>) mostrando uma média global.</p>
@@ -2566,23 +2580,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-f61c6f6b5aed4820bb4d30292b9a5a68.vega-embed {
+  #altair-viz-dcd62e9ac9c34da38b8f64566ba63ad3.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-f61c6f6b5aed4820bb4d30292b9a5a68.vega-embed details,
-  #altair-viz-f61c6f6b5aed4820bb4d30292b9a5a68.vega-embed details summary {
+  #altair-viz-dcd62e9ac9c34da38b8f64566ba63ad3.vega-embed details,
+  #altair-viz-dcd62e9ac9c34da38b8f64566ba63ad3.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-f61c6f6b5aed4820bb4d30292b9a5a68"></div>
+<div id="altair-viz-dcd62e9ac9c34da38b8f64566ba63ad3"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-f61c6f6b5aed4820bb4d30292b9a5a68") {
-      outputDiv = document.getElementById("altair-viz-f61c6f6b5aed4820bb4d30292b9a5a68");
+    if (outputDiv.id !== "altair-viz-dcd62e9ac9c34da38b8f64566ba63ad3") {
+      outputDiv = document.getElementById("altair-viz-dcd62e9ac9c34da38b8f64566ba63ad3");
     }
 
     const paths = {
@@ -2659,23 +2673,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-3630275a08024bb892e6b25cfa095420.vega-embed {
+  #altair-viz-da561d25e5f9471d8f3165b0fdcdbcd6.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-3630275a08024bb892e6b25cfa095420.vega-embed details,
-  #altair-viz-3630275a08024bb892e6b25cfa095420.vega-embed details summary {
+  #altair-viz-da561d25e5f9471d8f3165b0fdcdbcd6.vega-embed details,
+  #altair-viz-da561d25e5f9471d8f3165b0fdcdbcd6.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-3630275a08024bb892e6b25cfa095420"></div>
+<div id="altair-viz-da561d25e5f9471d8f3165b0fdcdbcd6"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-3630275a08024bb892e6b25cfa095420") {
-      outputDiv = document.getElementById("altair-viz-3630275a08024bb892e6b25cfa095420");
+    if (outputDiv.id !== "altair-viz-da561d25e5f9471d8f3165b0fdcdbcd6") {
+      outputDiv = document.getElementById("altair-viz-da561d25e5f9471d8f3165b0fdcdbcd6");
     }
 
     const paths = {
@@ -2794,23 +2808,23 @@
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-d6ff2af9943d481d80b9183ba0b509b0.vega-embed {
+  #altair-viz-85b9a4f0ef4849468ac5c157de0a90cb.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-d6ff2af9943d481d80b9183ba0b509b0.vega-embed details,
-  #altair-viz-d6ff2af9943d481d80b9183ba0b509b0.vega-embed details summary {
+  #altair-viz-85b9a4f0ef4849468ac5c157de0a90cb.vega-embed details,
+  #altair-viz-85b9a4f0ef4849468ac5c157de0a90cb.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-d6ff2af9943d481d80b9183ba0b509b0"></div>
+<div id="altair-viz-85b9a4f0ef4849468ac5c157de0a90cb"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-d6ff2af9943d481d80b9183ba0b509b0") {
-      outputDiv = document.getElementById("altair-viz-d6ff2af9943d481d80b9183ba0b509b0");
+    if (outputDiv.id !== "altair-viz-85b9a4f0ef4849468ac5c157de0a90cb") {
+      outputDiv = document.getElementById("altair-viz-85b9a4f0ef4849468ac5c157de0a90cb");
     }
 
     const paths = {
@@ -2878,7 +2892,7 @@
 <ul class="simple">
 <li><p>Ajustamos o gráfico com as propriedades <code class="docutils literal notranslate"><span class="pre">width</span></code> e <code class="docutils literal notranslate"><span class="pre">height</span></code> para auxiliar o alinhamento e garantir que a visualização completa caiba na tela.</p></li>
 <li><p>Adicionamos <code class="docutils literal notranslate"><span class="pre">resolve_legend(color='independent')</span></code> para garantir que a legenda de cores seja associada diretamente aos histogramas coloridos por temperatura. Caso contrário, a legenda resolverá para o painel como um todo.</p></li>
-<li><p>Usamos <code class="docutils literal notranslate"><span class="pre">configure_axis(labelAngle=0)</span></code> para garantir que nenhum rótulo de eixo seja rotacionado. Isso ajuda a garantir o alinhamento adequado entre os gráficos de dispersão no SPLOM e os histogramas por mês à direita.</p></li>
+<li><p>Usamos <code class="docutils literal notranslate"><span class="pre">configure_axis(labelAngle=0)</span></code> para garantir que nenhum rótulo de eixo seja rotacionado. Isso ajuda a garantir o alinhamento adequado entre os gráficos de dispersão (<em>scatter plots</em>) no SPLOM e os histogramas por mês à direita.</p></li>
 </ul>
 <p><em>Tente remover ou modificar qualquer um desses ajustes e veja como o layout do painel responde!</em></p>
 <p>Este painel pode ser reutilizado para mostrar dados de outros locais ou de outros conjuntos de dados. <em>Atualize o painel para mostrar padrões climáticos para Nova York em vez de Seattle.</em></p>
@@ -2957,16 +2971,16 @@
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dados-meteorologicos"><font color="gray">5.1</font> Dados Meteorológicos</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camada"><font color="gray">5.2</font> Camada</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eixos-compartilhados"><font color="gray"> 5.2.1 </font> Eixos Compartilhados</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-de-eixo-duplo"><font color="gray"> 5.2.2 </font> Gráficos de Eixo Duplo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dados-meteorologicos">Dados Meteorológicos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#camada">Camada</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eixos-compartilhados">Eixos Compartilhados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graficos-de-eixo-duplo-dual-axis-charts">Gráficos de Eixo Duplo (<em>dual-axis charts</em>)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faceta"><font color="gray">5.3</font> Faceta</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacao"><font color="gray"> 5.4 </font> Concatenação</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeticao"><font color="gray"> 5.5 </font> Repetição</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uma-algebra-de-composicao-de-visualizacoes"><font color="gray">5.6</font> Uma Álgebra de Composição de Visualizações</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faceta">Faceta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenacao">Concatenação</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#repeticao">Repetição</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uma-algebra-de-composicao-de-visualizacoes">Uma Álgebra de Composição de Visualizações</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resumo"><font color="gray">5.7</font> Resumo</a></li>
 </ul>
   </nav></div>

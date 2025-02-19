@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: content/intro
+root: content/introduction
 chapters:
 - file: content/1_intro
 - file: content/2_types
@@ -12,4 +12,3 @@ chapters:
 - file: content/6_interaction
 - file: content/7_cartographics
 - file: content/debugging
-- file: content/introduction

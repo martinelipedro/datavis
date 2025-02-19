@@ -36,7 +36,7 @@ alt.Chart(movies).mark_circle().add_selection(
 ------------------
 
 ----- stderr -----
-C:\Users\gabyd\AppData\Local\Temp\ipykernel_8780\2770894913.py:1: AltairDeprecationWarning: 
+C:\Users\gabyd\AppData\Local\Temp\ipykernel_18028\2770894913.py:1: AltairDeprecationWarning: 
 Deprecated since `altair=5.0.0`. Use selection_point instead.
   selectGenre = alt.selection_single(
 ------------------
