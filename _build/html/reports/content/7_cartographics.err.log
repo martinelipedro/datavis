@@ -18,16 +18,24 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-world = data.world_110m.url
-world
+alt.Chart(zipcodes).mark_square(
+    size=1, opacity=1
+).encode( 
+    longitude='longitude:Q', # aplica o campo chamado 'longitude' para o canal "longitude".
+    latitude='latitude:Q'    # aplica o campo chamado 'latitude' para o canal "latitude".
+    type='albersUsa'
+).properties(
+    width=900,
+    height=500
+).configure_view(
+    stroke=None
+)
 ------------------
 
 
-[1;31m---------------------------------------------------------------------------[0m
-[1;31mNameError[0m                                 Traceback (most recent call last)
-Cell [1;32mIn[1], line 1[0m
-[1;32m----> 1[0m world [38;5;241m=[39m [43mdata[49m[38;5;241m.[39mworld_110m[38;5;241m.[39murl
-[0;32m      2[0m world
+[1;36m  Cell [1;32mIn[15], line 5[1;36m[0m
+[1;33m    latitude='latitude:Q'    # aplica o campo chamado 'latitude' para o canal "latitude".[0m
+[1;37m             ^[0m
+[1;31mSyntaxError[0m[1;31m:[0m invalid syntax. Perhaps you forgot a comma?
 
-[1;31mNameError[0m: name 'data' is not defined
 
