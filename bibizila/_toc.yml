@@ -1,0 +1,14 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: content/intro
+chapters:
+- file: content/1_intro
+- file: content/2_types
+- file: content/3_transform
+- file: content/4_scales
+- file: content/5_composition
+- file: content/6_interaction
+- file: content/7_cartographics
+- file: content/debugging

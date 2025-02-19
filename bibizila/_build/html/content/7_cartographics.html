@@ -1,0 +1,1308 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7.1 Dados Geográficos: GeoJSON e TopoJSON &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/7_cartographics';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Guia de Depuração para Altair" href="debugging.html" />
+    <link rel="prev" title="6. Interação" href="6_interaction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/impatech.jpg" class="logo__image only-light" alt="My sample book - Home"/>
+    <img src="../_static/impatech.jpg" class="logo__image only-dark pst-js-only" alt="My sample book - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Introdução
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_intro.html">1. Introdução ao Altair</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2_types.html">2. Tipos de dados, marcas gráficas e canais de codificação visual</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="3_transform.html">3. Transformação de dados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_scales.html">4. Escalas, Eixos e Legendas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_composition.html"><font color="gray">5.</font> Composição de Múltiplas Visualizações</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_interaction.html">6. Interação</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7.1 Dados Geográficos: GeoJSON e TopoJSON</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Guia de Depuração para Altair</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/7_cartographics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/7_cartographics.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>7.1 Dados Geográficos: GeoJSON e TopoJSON</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marcas-de-geoforma"><font color="gray">7.2</font> Marcas de Geoforma</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-pontos">7.3. Mapas de Pontos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-simbolos"><font color="gray">7.4</font> Mapas de Símbolos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapa-coropletico"><font color="gray">7.5</font> Mapa Coroplético</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#projecoes-cartograficas"><font color="gray">7.6</font> Projeções Cartográficas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#um-tour-pelos-tipos-especificos-de-projecoes"><font color="gray">7.6.1 </font> Um Tour pelos Tipos Específicos de Projeções</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="dados-geograficos-geojson-e-topojson">
+<h1>7.1 Dados Geográficos: GeoJSON e TopoJSON<a class="headerlink" href="#dados-geograficos-geojson-e-topojson" title="Link to this heading">#</a></h1>
+<p>Até esse ponto, trabalhamos com datasets formatados em JSON e CSV, que correspondem a tabelas de dados feitas de linhas (registros) e colunas (campos). Com o objetivo de representar regiões geográficas (países, estados, <em>etc.</em>) e trajetórias (rotas de voo, linhas de metrô, <em>etc.</em>), precisamos  expandir nosso repertório com formatos adicionais projetados para suportar geometrias ricas.</p>
+<p>O <a class="reference external" href="https://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a> modela recursos geográficos com umformato JSON especializado. Um <code class="docutils literal notranslate"><span class="pre">feature</span></code> GeoJSON pode incluir dados geométricos – tal como coordenadas de <code class="docutils literal notranslate"><span class="pre">longitude</span></code> e <code class="docutils literal notranslate"><span class="pre">latitude</span></code>, que constituem a fronteira de um país – assim como atributos de dados adicionais.</p>
+<p>Aqui está um objeto <code class="docutils literal notranslate"><span class="pre">feature</span></code> GeoJSON para o Colorado, um estado americano:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Colorado&quot;</span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">[[</span><span class="mf">-106.32056285448942</span><span class="p">,</span><span class="mf">40.998675790862656</span><span class="p">],[</span><span class="mf">-106.19134826714341</span><span class="p">,</span><span class="mf">40.99813863734313</span><span class="p">],[</span><span class="mf">-105.27607827344248</span><span class="p">,</span><span class="mf">40.99813863734313</span><span class="p">],[</span><span class="mf">-104.9422739227986</span><span class="p">,</span><span class="mf">40.99813863734313</span><span class="p">],[</span><span class="mf">-104.05212898774828</span><span class="p">,</span><span class="mf">41.00136155846029</span><span class="p">],[</span><span class="mf">-103.57475287338661</span><span class="p">,</span><span class="mf">41.00189871197981</span><span class="p">],[</span><span class="mf">-103.38093099236758</span><span class="p">,</span><span class="mf">41.00189871197981</span><span class="p">],[</span><span class="mf">-102.65589358559272</span><span class="p">,</span><span class="mf">41.00189871197981</span><span class="p">],[</span><span class="mf">-102.62000064466328</span><span class="p">,</span><span class="mf">41.00189871197981</span><span class="p">],[</span><span class="mf">-102.052892177978</span><span class="p">,</span><span class="mf">41.00189871197981</span><span class="p">],[</span><span class="mf">-102.052892177978</span><span class="p">,</span><span class="mf">40.74889940428302</span><span class="p">],[</span><span class="mf">-102.052892177978</span><span class="p">,</span><span class="mf">40.69733266640851</span><span class="p">],[</span><span class="mf">-102.052892177978</span><span class="p">,</span><span class="mf">40.44003613055551</span><span class="p">],[</span><span class="mf">-102.052892177978</span><span class="p">,</span><span class="mf">40.3492571857556</span><span class="p">],[</span><span class="mf">-102.052892177978</span><span class="p">,</span><span class="mf">40.00333031918079</span><span class="p">],[</span><span class="mf">-102.04930288388505</span><span class="p">,</span><span class="mf">39.57414465707943</span><span class="p">],[</span><span class="mf">-102.04930288388505</span><span class="p">,</span><span class="mf">39.56823596836465</span><span class="p">],[</span><span class="mf">-102.0457135897921</span><span class="p">,</span><span class="mf">39.1331416175485</span><span class="p">],[</span><span class="mf">-102.0457135897921</span><span class="p">,</span><span class="mf">39.0466599009048</span><span class="p">],[</span><span class="mf">-102.0457135897921</span><span class="p">,</span><span class="mf">38.69751011321283</span><span class="p">],[</span><span class="mf">-102.0457135897921</span><span class="p">,</span><span class="mf">38.61478847120581</span><span class="p">],[</span><span class="mf">-102.0457135897921</span><span class="p">,</span><span class="mf">38.268861604631</span><span class="p">],[</span><span class="mf">-102.0457135897921</span><span class="p">,</span><span class="mf">38.262415762396685</span><span class="p">],[</span><span class="mf">-102.04212429569915</span><span class="p">,</span><span class="mf">37.738153927339205</span><span class="p">],[</span><span class="mf">-102.04212429569915</span><span class="p">,</span><span class="mf">37.64415206142214</span><span class="p">],[</span><span class="mf">-102.04212429569915</span><span class="p">,</span><span class="mf">37.38900413964724</span><span class="p">],[</span><span class="mf">-102.04212429569915</span><span class="p">,</span><span class="mf">36.99365914927603</span><span class="p">],[</span><span class="mf">-103.00046581851544</span><span class="p">,</span><span class="mf">37.00010499151034</span><span class="p">],[</span><span class="mf">-103.08660887674611</span><span class="p">,</span><span class="mf">37.00010499151034</span><span class="p">],[</span><span class="mf">-104.00905745863294</span><span class="p">,</span><span class="mf">36.99580776335414</span><span class="p">],[</span><span class="mf">-105.15404227428235</span><span class="p">,</span><span class="mf">36.995270609834606</span><span class="p">],[</span><span class="mf">-105.2222388620483</span><span class="p">,</span><span class="mf">36.995270609834606</span><span class="p">],[</span><span class="mf">-105.7175614468747</span><span class="p">,</span><span class="mf">36.99580776335414</span><span class="p">],[</span><span class="mf">-106.00829426840322</span><span class="p">,</span><span class="mf">36.995270609834606</span><span class="p">],[</span><span class="mf">-106.47490250048605</span><span class="p">,</span><span class="mf">36.99365914927603</span><span class="p">],[</span><span class="mf">-107.4224761410235</span><span class="p">,</span><span class="mf">37.00010499151034</span><span class="p">],[</span><span class="mf">-107.48349414060355</span><span class="p">,</span><span class="mf">37.00010499151034</span><span class="p">],[</span><span class="mf">-108.38081766383978</span><span class="p">,</span><span class="mf">36.99903068447129</span><span class="p">],[</span><span class="mf">-109.04483707103458</span><span class="p">,</span><span class="mf">36.99903068447129</span><span class="p">],[</span><span class="mf">-109.04483707103458</span><span class="p">,</span><span class="mf">37.484617466122884</span><span class="p">],[</span><span class="mf">-109.04124777694163</span><span class="p">,</span><span class="mf">37.88049961001363</span><span class="p">],[</span><span class="mf">-109.04124777694163</span><span class="p">,</span><span class="mf">38.15283644441336</span><span class="p">],[</span><span class="mf">-109.05919424740635</span><span class="p">,</span><span class="mf">38.49983761802722</span><span class="p">],[</span><span class="mf">-109.05201565922046</span><span class="p">,</span><span class="mf">39.36680339854235</span><span class="p">],[</span><span class="mf">-109.05201565922046</span><span class="p">,</span><span class="mf">39.49786885730673</span><span class="p">],[</span><span class="mf">-109.05201565922046</span><span class="p">,</span><span class="mf">39.66062637372313</span><span class="p">],[</span><span class="mf">-109.05201565922046</span><span class="p">,</span><span class="mf">40.22248895514744</span><span class="p">],[</span><span class="mf">-109.05201565922046</span><span class="p">,</span><span class="mf">40.653823231326896</span><span class="p">],[</span><span class="mf">-109.05201565922046</span><span class="p">,</span><span class="mf">41.000287251421234</span><span class="p">],[</span><span class="mf">-107.91779872584989</span><span class="p">,</span><span class="mf">41.00189871197981</span><span class="p">],[</span><span class="mf">-107.3183866123281</span><span class="p">,</span><span class="mf">41.00297301901887</span><span class="p">],[</span><span class="mf">-106.85895696843116</span><span class="p">,</span><span class="mf">41.00189871197981</span><span class="p">],[</span><span class="mf">-106.32056285448942</span><span class="p">,</span><span class="mf">40.998675790862656</span><span class="p">]]</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>O <code class="docutils literal notranslate"><span class="pre">feature</span></code> inclui um objeto <code class="docutils literal notranslate"><span class="pre">properties</span></code>, que pode incluir qualquer número de campos de dados, mais um objeto <code class="docutils literal notranslate"><span class="pre">geometry</span></code>, que nesse caso contém um único polígono que consiste de coordenadas <code class="docutils literal notranslate"><span class="pre">[longitude,</span> <span class="pre">latitude]</span></code> para a fronteira do estado. As coordenadas continuam para a direita por um tempo, caso você queira rolar…</p>
+<p>Para aprender  mais sobre os detalhes minuciosos do GeoJSOn, veja as <a class="reference external" href="https://geojson.org/">especificações oficiais de GeoJSON</a> ou leia a <a class="reference external" href="https://macwright.com/2015/03/23/geojson-second-bite">útil cartilha de Tom MacWright.</a></p>
+<p>Uma desvantagem do GeoJSON como um formato de armazenamento é que ele pode ser redundante, resultando um arquivos maiores. Considere: O Colorado faz fronteira com outros seis estados (sete se você incluir o canto tocando o Arizona). Ao invés de usar listas de coordenadas separadas e sobrepostas para cada um desses estados, uma abordagem mais compacta é codificar fronteiras compartilhadas somente uma vez, representando a <em>topologia</em> das regiões geográficas. Felizmente, isso é exatamente o que o formato <a class="reference external" href="https://github.com/topojson/topojson/blob/master/README.md">TopoJSON</a> faz!</p>
+<p>vamos carregar um arquivo TopoJSON de países do mundo (com resolução de 110 metros):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">world</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">world_110m</span><span class="o">.</span><span class="n">url</span>
+<span class="n">world</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">world</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">world_110m</span><span class="o">.</span><span class="n">url</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">world</span>
+
+<span class="ne">NameError</span>: name &#39;data&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">world_topo</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">world_110m</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">world_topo</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;type&#39;, &#39;transform&#39;, &#39;objects&#39;, &#39;arcs&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">world_topo</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Topology&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">world_topo</span><span class="p">[</span><span class="s1">&#39;objects&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;land&#39;, &#39;countries&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Inspecione o dicionário TopoJSON <code class="docutils literal notranslate"><span class="pre">world_topo</span></code> acima paraver seu conteúdo.</em></p>
+<p>Nos dados acima, a propriedade <code class="docutils literal notranslate"><span class="pre">objects</span></code> indica os elementos nomeados que podemos extrair dos dados: geometrias para todos os países (<code class="docutils literal notranslate"><span class="pre">countries</span></code>), ou um único polígono representando todas terras (<code class="docutils literal notranslate"><span class="pre">land</span></code>) do planeta Terra. Qualquer um deles pode ser descompactado para dados GeoJSON que poderemos visualizar.</p>
+<p>Como TopoJSON é um formato especializado, precisamos instruir o Altair a analisar o formato TopoJSON, indicando qual objeto de recurso nomeado desejamos extrair da topologia. O código seguinte indica que queremos extrair recursos GeoJSON do dataset <code class="docutils literal notranslate"><span class="pre">world</span></code> para o objeto <code class="docutils literal notranslate"><span class="pre">countries</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="s1">&#39;countries&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Essa chamada de método <code class="docutils literal notranslate"><span class="pre">alt.topo_feature</span></code> se expande para o seguinte JSON do Vega-Lite:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="n">world</span><span class="p">,</span>
+  <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;topojson&quot;</span><span class="p">,</span> <span class="s2">&quot;feature&quot;</span><span class="p">:</span> <span class="s2">&quot;countries&quot;</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Agora que podemos carregar dados geográficos, estamos prontos para começar a fazer mapas!</p>
+<section id="marcas-de-geoforma">
+<h2><font color="gray">7.2</font> Marcas de Geoforma<a class="headerlink" href="#marcas-de-geoforma" title="Link to this heading">#</a></h2>
+<hr class="docutils" />
+<p>Para visualizar dados geográficos, o Altair fornece o tipo de marca <code class="docutils literal notranslate"><span class="pre">geoshape</span></code>. Para criar um mapa básico, podemos criar uma marca <code class="docutils literal notranslate"><span class="pre">geoshape</span></code> e passar nossos dados TopoJSON, que são então desembrulhados em recursos GeoJSON, um para cada país do mundo:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="s1">&#39;countries&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div id="altair-viz-ded4d19b935a4b7187f34bfa41e0981a"></div>
+<script type="text/javascript">
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-ded4d19b935a4b7187f34bfa41e0981a") {
+      outputDiv = document.getElementById("altair-viz-ded4d19b935a4b7187f34bfa41e0981a");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function loadScript(lib) {
+      return new Promise(function(resolve, reject) {
+        var s = document.createElement('script');
+        s.src = paths[lib];
+        s.async = true;
+        s.onload = () => resolve(paths[lib]);
+        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+        document.getElementsByTagName("head")[0].appendChild(s);
+      });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else if (typeof vegaEmbed === "function") {
+      displayChart(vegaEmbed);
+    } else {
+      loadScript("vega")
+        .then(() => loadScript("vega-lite"))
+        .then(() => loadScript("vega-embed"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": "geoshape", "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<p>No exemplo acima, o Altair aplica uma cor azul padrão e usa uma projeção de mapa padrão (<code class="docutils literal notranslate"><span class="pre">mercator</span></code>). Podemos personalizar as cores e as larguras das bordas usando propriedades padrão de marca. Usando o método <code class="docutils literal notranslate"><span class="pre">project</span></code>, também podemos adicionar nossa própria projeção de mapa:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="s1">&#39;countries&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+    <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#2a1d0c&#39;</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#706545&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;mercator&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div id="altair-viz-7f5ee9d649f146379b5c5fb0140fedc5"></div>
+<script type="text/javascript">
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-7f5ee9d649f146379b5c5fb0140fedc5") {
+      outputDiv = document.getElementById("altair-viz-7f5ee9d649f146379b5c5fb0140fedc5");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function loadScript(lib) {
+      return new Promise(function(resolve, reject) {
+        var s = document.createElement('script');
+        s.src = paths[lib];
+        s.async = true;
+        s.onload = () => resolve(paths[lib]);
+        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+        document.getElementsByTagName("head")[0].appendChild(s);
+      });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else if (typeof vegaEmbed === "function") {
+      displayChart(vegaEmbed);
+    } else {
+      loadScript("vega")
+        .then(() => loadScript("vega-lite"))
+        .then(() => loadScript("vega-embed"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}, "projection": {"type": "mercator"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<p>Por padrão, o Altair ajusta automaticamente a projeção para que todos os dados caibam dentro da largura e altura do gráfico. Também podemos especificar parâmetros de projeção, como <code class="docutils literal notranslate"><span class="pre">scale</span></code> (nível de zoom) e <code class="docutils literal notranslate"><span class="pre">translate</span></code> (panorama), para personalizar as configurações da projeção. Aqui, ajustamos os parâmetros <code class="docutils literal notranslate"><span class="pre">scale</span></code> e <code class="docutils literal notranslate"><span class="pre">translate</span></code> para focar na Europa:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="s1">&#39;countries&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+    <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#2a1d0c&#39;</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#706545&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;mercator&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">translate</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">550</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div id="altair-viz-91718abd2285427c868a1d36c8906462"></div>
+<script type="text/javascript">
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-91718abd2285427c868a1d36c8906462") {
+      outputDiv = document.getElementById("altair-viz-91718abd2285427c868a1d36c8906462");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function loadScript(lib) {
+      return new Promise(function(resolve, reject) {
+        var s = document.createElement('script');
+        s.src = paths[lib];
+        s.async = true;
+        s.onload = () => resolve(paths[lib]);
+        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+        document.getElementsByTagName("head")[0].appendChild(s);
+      });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else if (typeof vegaEmbed === "function") {
+      displayChart(vegaEmbed);
+    } else {
+      loadScript("vega")
+        .then(() => loadScript("vega-lite"))
+        .then(() => loadScript("vega-embed"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}, "projection": {"scale": 400, "translate": [100, 550], "type": "mercator"}, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<p><em>Observe como a resolução de 110m dos dados se torna aparente nesse nível de escala. Para ver linhas de costa e fronteiras mais detalhadas, precisamos de um arquivo de entrada com geometrias mais detalhadas. Ajuste os parâmetros <code class="docutils literal notranslate"><span class="pre">scale</span></code> e <code class="docutils literal notranslate"><span class="pre">translate</span></code> para focar o mapa em outras regiões!</em></p>
+<p>Até agora, nosso mapa mostra apenas países. Usando o operador <code class="docutils literal notranslate"><span class="pre">layer</span></code>, podemos combinar múltiplos elementos do mapa. O Altair inclui <em>geradores de dados</em> que podemos usar para criar dados para camadas adicionais do mapa:</p>
+<ul class="simple">
+<li><p>O gerador de esfera (<code class="docutils literal notranslate"><span class="pre">{'sphere':</span> <span class="pre">True}</span></code>) fornece uma representação GeoJSON da esfera completa da Terra. Podemos criar uma marca <code class="docutils literal notranslate"><span class="pre">geoshape</span></code> adicional que preenche a forma da Terra como uma camada de fundo.</p></li>
+<li><p>O gerador de graticule (<code class="docutils literal notranslate"><span class="pre">{'graticule':</span> <span class="pre">...}</span></code>) cria um recurso GeoJSON representando um <em>graticule</em>: uma grade formada por linhas de latitude e longitude. O graticule padrão tem meridianos e paralelos a cada 10° entre ±80° de latitude. Para as regiões polares, há meridianos a cada 90°. Essas configurações podem ser personalizadas usando as propriedades <code class="docutils literal notranslate"><span class="pre">stepMinor</span></code> e <code class="docutils literal notranslate"><span class="pre">stepMajor</span></code>.</p></li>
+</ul>
+<p>Vamos sobrepor as marcas de esfera, graticule e país em uma especificação de mapa reutilizável:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">map</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="c1"># use a esfera da Terra como camada base</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">({</span><span class="s1">&#39;sphere&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+        <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#e6f3ff&#39;</span>
+    <span class="p">),</span>
+    <span class="c1"># adicione um graticule para as linhas de referência geográficas</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">({</span><span class="s1">&#39;graticule&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+        <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#ffffff&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">),</span>
+    <span class="c1"># e depois os países do mundo</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">world</span><span class="p">,</span> <span class="s1">&#39;countries&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+        <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#2a1d0c&#39;</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#706545&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mf">0.5</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">400</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Podemos estender o mapa com a projeção desejada e desenhar o resultado. Aqui aplicamos uma <a class="reference external" href="https://en.wikipedia.org/wiki/Natural_Earth_projection">projeção Natural Earth</a>. A camada <em>sphere</em> fornece o fundo azul claro; a camada <em>graticule</em> fornece as linhas de referência geográficas brancas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">map</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;naturalEarth1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">translate</span><span class="o">=</span><span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span><span class="n">stroke</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div id="altair-viz-a1af16eb42d9496f991ca8d2b7926e27"></div>
+<script type="text/javascript">
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-a1af16eb42d9496f991ca8d2b7926e27") {
+      outputDiv = document.getElementById("altair-viz-a1af16eb42d9496f991ca8d2b7926e27");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.8.1?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function loadScript(lib) {
+      return new Promise(function(resolve, reject) {
+        var s = document.createElement('script');
+        s.src = paths[lib];
+        s.async = true;
+        s.onload = () => resolve(paths[lib]);
+        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+        document.getElementsByTagName("head")[0].appendChild(s);
+      });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else if (typeof vegaEmbed === "function") {
+      displayChart(vegaEmbed);
+    } else {
+      loadScript("vega")
+        .then(() => loadScript("vega-lite"))
+        .then(() => loadScript("vega-embed"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300, "stroke": null}}, "layer": [{"data": {"sphere": true}, "mark": {"type": "geoshape", "fill": "#e6f3ff"}}, {"data": {"graticule": true}, "mark": {"type": "geoshape", "stroke": "#ffffff", "strokeWidth": 1}}, {"data": {"url": "https://vega.github.io/vega-datasets/data/world-110m.json", "format": {"feature": "countries", "type": "topojson"}}, "mark": {"type": "geoshape", "fill": "#2a1d0c", "stroke": "#706545", "strokeWidth": 0.5}}], "height": 400, "projection": {"scale": 110, "translate": [300, 200], "type": "naturalEarth1"}, "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json"}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+</section>
+<section id="mapas-de-pontos">
+<h2>7.3. Mapas de Pontos<a class="headerlink" href="#mapas-de-pontos" title="Link to this heading">#</a></h2>
+<p>Em adição aos dados <em>geometric</em> fornecidos pelo GeoJSON ou TopoJSON, muitos datasets tabulares incluem informação geográfica na forma das coordenadas nos campos <code class="docutils literal notranslate"><span class="pre">longitude</span></code> e <code class="docutils literal notranslate"><span class="pre">latitude</span></code>, ou referencia regiões geográficas como nomes de países, estados, códigos postais, <em>etc</em>, que podem ser mapeados para coordenadas usando <a class="reference external" href="https://en.wikipedia.org/wiki/Address_geocoding">Address geocoding</a>. Em alguns casos, os dados de localização são ricos o suficientes para ver padrões significativos ao projetar os pontos sozinhos - Nenhum mapa base é necessário!</p>
+<p>Vamos dar uma olhada no dataset de códigos postais de 5 dígitos dos EUA, incluindo as coordenadas <code class="docutils literal notranslate"><span class="pre">longitude</span></code>, <code class="docutils literal notranslate"><span class="pre">latitude</span></code> para cada agência de correios em adição ao campo <code class="docutils literal notranslate"><span class="pre">.longitudelatitudezip_code</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zipcodes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">zipcodes</span><span class="o">.</span><span class="n">url</span>
+<span class="n">zipcodes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">zipcodes</span><span class="p">)</span><span class="o">.</span><span class="n">mark_square</span><span class="p">(</span>
+    <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span> 
+    <span class="n">longitude</span><span class="o">=</span><span class="s1">&#39;longitude:Q&#39;</span><span class="p">,</span> <span class="c1"># aplica o campo chamado &#39;longitude&#39; para o canal &quot;longitude&quot;.</span>
+    <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span>    <span class="c1"># aplica o campo chamado &#39;latitude&#39; para o canal &quot;latitude&quot;.</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Nós podemos visualizar a localização de cada agência de correios usando uma pequena ( 1-pixel ) marcação. Entretanto, para definir as posições nós <em>não</em> usamos os canais <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code>. <em>Mas por que não?</em></p>
+<p>Enquanto as projeções cartográficas mapeiam coordenadas (<code class="docutils literal notranslate"><span class="pre">longitude</span></code>, <code class="docutils literal notranslate"><span class="pre">latitude</span></code>) em coordenadas (<code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>), eles podem fazer isso de formas arbitrárias. Não há garantia, por exemplo, de que  <code class="docutils literal notranslate"><span class="pre">longitude</span></code> → <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">latitude</span></code> → <code class="docutils literal notranslate"><span class="pre">y</span></code>! Em vez disso, o altair inclui os canais de codificação especiais <code class="docutils literal notranslate"><span class="pre">latitude</span></code>e <code class="docutils literal notranslate"><span class="pre">longitude</span></code> para lidar com coordenadas geográficas. Esses canais indicam quais campos de dados devem ser mapeados para as coordenadas de <code class="docutils literal notranslate"><span class="pre">longitude</span></code> e <code class="docutils literal notranslate"><span class="pre">latitude</span></code> e então aplica uma projeção para mapear essas coordenadas para as posições  <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<p><em>Plotando apenas códigos postais, podemos ver o contorno dos Estados Unidos e discernir padrões significativos na densidade de agências de correio, sem um mapa base ou elementos de referência adicionais!</em></p>
+<p>Usamos a projeção <code class="docutils literal notranslate"><span class="pre">albersUsa</span></code>, que toma algumas liberdades com a geometria real da Terra, com versões em escala do Alasca e Havaí no canto inferior esquerdo. Como não especificamos os parâmetros <code class="docutils literal notranslate"><span class="pre">scale</span></code> ou <code class="docutils literal notranslate"><span class="pre">translate</span></code> da projeção, o Altair os define automaticamente para se ajustarem aos dados visualizados.</p>
+<p>Agora podemos fazer mais perguntas sobre nosso conjunto de dados. Por exemplo, há algum padrão ou razão para a alocação de códigos postais? Para reponder essa questão, podemos adicionar uma codificação de cores baseado no primeiro dígito do código postal. Primeiro, adicionamos uma transformação <code class="docutils literal notranslate"><span class="pre">calculate</span></code> para extrair o primeiro dígito e codificamos o resultado usando o canal de cores:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">zipcodes</span><span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">digit</span><span class="o">=</span><span class="s1">&#39;datum.zip_code[0]&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mark_square</span><span class="p">(</span>
+    <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">longitude</span><span class="o">=</span><span class="s1">&#39;longitude:Q&#39;</span><span class="p">,</span>
+    <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;digit:N&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Para observar um dígito específico, adicionamos uma filtragem para para limitar os dados exibidos! Tente adicionar uma <a class="reference external" href="https://github.com/uwdata/visualization-curriculum/blob/master/altair_interaction.ipynb">seleção interativa</a> para filtrar para um único dígito e atualizar dinamicamente o mapa. E certifique-se de usar strings (`’1’`) em vez de números (`1`) ao filtrar valores de dígitos!</em></p>
+<p>(Este exemplo é inspirado na visualização clássica <a class="reference external" href="https://benfry.com/zipdecode/">zipdecode</a> de Ben Fry!)</p>
+<p>Podemos nos perguntar ainda mais o que a <em>sequência</em> de códigos postais pode indicar. Uma maneira de explorar essa questão é conectar cada código postal consecutivo usando uma marca de <code class="docutils literal notranslate"><span class="pre">linha</span></code>, como feito na visualização <a class="reference external" href="https://eagereyes.org/zipscribble-maps/united-states">ZipScribble</a> de Robert Kosara:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">zipcodes</span><span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+    <span class="s1">&#39;-150 &lt; datum.longitude &amp;&amp; 22 &lt; datum.latitude &amp;&amp; datum.latitude &lt; 55&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_calculate</span><span class="p">(</span>
+    <span class="n">digit</span><span class="o">=</span><span class="s1">&#39;datum.zip_code[0]&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">(</span>
+    <span class="n">strokeWidth</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">longitude</span><span class="o">=</span><span class="s1">&#39;longitude:Q&#39;</span><span class="p">,</span>
+    <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;digit:N&#39;</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="s1">&#39;zip_code:O&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Agora podemos ver como os códigos postais se agrupam ainda mais em áreas menores, indicando uma alocação hierárquica de códigos por localização, mas com alguma variabilidade notável dentro dos clusters locais.</em></p>
+<p>Se você estava prestando atenção aos nossos mapas anteriores, pode ter notado que há códigos postais sendo plotados no canto superior esquerdo! Eles correspondem a locais como Puerto Rico ou American Samoa, que contêm códigos postais dos EUA, mas são mapeados para coordenadas <code class="docutils literal notranslate"><span class="pre">nulas</span></code> (<code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>) pela projeção <code class="docutils literal notranslate"><span class="pre">albersUsa</span></code>. Além disso, Alasca e Havaí podem complicar nossa visão dos segmentos de linha de conexão. Em resposta, o código acima inclui um filtro adicional que remove pontos fora dos nossos intervalos de <code class="docutils literal notranslate"><span class="pre">longitude</span></code> e <code class="docutils literal notranslate"><span class="pre">latitude</span></code> escolhidos.</p>
+<p><em>Remova o filtro acima para ver o que acontece!</em></p>
+</section>
+<section id="mapas-de-simbolos">
+<h2><font color="gray">7.4</font> Mapas de Símbolos<a class="headerlink" href="#mapas-de-simbolos" title="Link to this heading">#</a></h2>
+<p>Agora, vamos combinar um mapa base com os dados visualizados como camadas diferentes. Examinaremos o networking dos voôs comerciais nos Estados Unidos, considerando tanto os aeroportos como as rotas dos voôs. Para fazermos isso, precisaremos de três conjuntos de dados diferentes. Para nosso mapa base, usaremos um arquivo do tipo TopoJSON para os Estados Unidos numa resolução de 10m, contendo dados para estados (<code class="docutils literal notranslate"><span class="pre">states</span></code>) e municípios (<code class="docutils literal notranslate"><span class="pre">counties</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">usa</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">us_10m</span><span class="o">.</span><span class="n">url</span>
+<span class="n">usa</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Para os aeroportos, vmos usar a base de dados com os campos das coordenadas de <code class="docutils literal notranslate"><span class="pre">latitude</span></code> e <code class="docutils literal notranslate"><span class="pre">longitude</span></code> de cada aeroporto, bem como o código <code class="docutils literal notranslate"><span class="pre">iata</span></code> do aeroporto — por exemplo, <code class="docutils literal notranslate"><span class="pre">SEA</span></code> para o <a class="reference external" href="https://pt.wikipedia.org/wiki/Aeroporto_Internacional_de_Seattle-Tacoma">Aeroporto Internacional de Seattle-Tacoma</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">airports</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">airports</span><span class="o">.</span><span class="n">url</span>
+<span class="n">airports</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finalmente, vamos usar uma base de dados para as rotas dos voôs, que contem a origem e destino de cada voô (demarcados pelos campos <code class="docutils literal notranslate"><span class="pre">origin</span></code> e <code class="docutils literal notranslate"><span class="pre">destination</span></code>, repectivamente) com os códigos IATA do aeroporto correspondente:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flights</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">flights_airport</span><span class="o">.</span><span class="n">url</span>
+<span class="n">flights</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Vamos começar criando uma mapa base usando a projeção <code class="docutils literal notranslate"><span class="pre">albersUsa</span></code>, depois adicionando uma camada que plota marcas de círculo para cada aeroporto:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">usa</span><span class="p">,</span> <span class="s1">&#39;states&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+        <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#ddd&#39;</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#fff&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">airports</span><span class="p">)</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">longitude</span><span class="o">=</span><span class="s1">&#39;longitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">tooltip</span><span class="o">=</span><span class="s1">&#39;iata:N&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>São muitos aeroportos! Obviamente, nem todos eles são os grandes centros de fluxo.</p>
+<p>Semelhante ao nosso conjunto de dados de códigos postais, nossos dados dos aeroportos incluem pontos que ficam fora da parte continental dos Estados Unido. Então, vemos novamente pontos no canto superior esquerdo. Podemos querer filtrar esses pontos, mas para isso, primeiro precisaremos saber mais sobre a natureza eles.</p>
+<p><em>Atualize a projeção do mapa acima para <em><code class="docutils literal notranslate"><span class="pre">albers</span></code></em> — evitando o comportamento idiossincrático do <em><code class="docutils literal notranslate"><span class="pre">albersUsa</span></code></em> — para que as localizações reais desses pontos adicionais sejam reveladas!</em></p>
+<p>Agora, em vez de mostrarmos todos os aeroportos de forma indiferente, vamos identificar os principais centros das rotas considerando o número total de rotas que se originam em cada aeroporto. Usaremos o conjunto de dados <code class="docutils literal notranslate"><span class="pre">routes</span></code> como nossa fonte de dados primária: ele contém uma lista de rotas de vôo que podemos combinar para contar o número de rotas para cada aeroporto de origem (no campo <code class="docutils literal notranslate"><span class="pre">origin</span></code>).</p>
+<p>No entanto, o conjunto de dados <code class="docutils literal notranslate"><span class="pre">routes</span></code> não inclui as localizações dos aeroportos! Para conectarmos os dados do <code class="docutils literal notranslate"><span class="pre">routes</span></code> com as localizações, precisamos de um novo tipo de transformação de dados: o <code class="docutils literal notranslate"><span class="pre">lookup</span></code>. A transformação <code class="docutils literal notranslate"><span class="pre">lookup</span></code> pega um valor e um campo em um conjunto de dados primário e o usa como uma chave para procurar informações relacionadas em outra tabela. Neste caso, queremos comparar o código do aeroporto de origem em nosso conjunto de dados <code class="docutils literal notranslate"><span class="pre">routes</span></code> com o campo <code class="docutils literal notranslate"><span class="pre">iata</span></code> do conjunto de dados <code class="docutils literal notranslate"><span class="pre">airports</span></code> e, em seguida, extrair os campos de <code class="docutils literal notranslate"><span class="pre">latitude</span></code> e <code class="docutils literal notranslate"><span class="pre">longitude</span></code> correspondentes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">usa</span><span class="p">,</span> <span class="s1">&#39;states&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+        <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#ddd&#39;</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#fff&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">flights</span><span class="p">)</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">()</span><span class="o">.</span><span class="n">transform_aggregate</span><span class="p">(</span>
+        <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;origin&#39;</span><span class="p">],</span>
+        <span class="n">routes</span><span class="o">=</span><span class="s1">&#39;count()&#39;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_lookup</span><span class="p">(</span>
+        <span class="n">lookup</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span>
+        <span class="n">from_</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">LookupData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">airports</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;iata&#39;</span><span class="p">,</span>
+                             <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+        <span class="s1">&#39;datum.state !== &quot;PR&quot; &amp;&amp; datum.state !== &quot;VI&quot;&#39;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">longitude</span><span class="o">=</span><span class="s1">&#39;longitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;origin:N&#39;</span><span class="p">,</span> <span class="s1">&#39;routes:Q&#39;</span><span class="p">],</span>
+        <span class="n">size</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="s1">&#39;routes:Q&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+        <span class="n">order</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Order</span><span class="p">(</span><span class="s1">&#39;routes:Q&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;descending&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Qual aeroporto dos Estados Unidos tem o maior número de rotas saindo dele?</em></p>
+<p>Agora que podemos ver os aeroports, gostaríamos de interagir melhor com eles entendendo a estrutura de network do trafégo aéreo. Podemos adicionar a marca gráfica <code class="docutils literal notranslate"><span class="pre">rule</span></code> para representar rotas saindo dos aeroportos de origem até os aeroportos de destino, o que necessita de duas transformações do <code class="docutils literal notranslate"><span class="pre">lookup</span></code> e recuperar as coordenadas para cada ponto desse segmento de reta. Além disso, podemos usar a seleção <code class="docutils literal notranslate"><span class="pre">single</span></code> para filtrar essas rotas tal que apenas as rotas tendo a origem no aeroporto atualmente selecionado seja mostrado.</p>
+<p><em>Começando do mapa estático acima, você poderia implementar uma versão interativa? Seja livre para pular o código abaixo para se engajar com o mapa interativo primeiro, e pense sobre como você mesmo faria!</em></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># interactive selection for origin airport</span>
+<span class="c1"># select nearest airport to mouse cursor</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">selection_single</span><span class="p">(</span>
+    <span class="n">on</span><span class="o">=</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="n">nearest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;origin&#39;</span><span class="p">],</span> <span class="n">empty</span><span class="o">=</span><span class="s1">&#39;none&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># shared data reference for lookup transforms</span>
+<span class="n">foreign</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">LookupData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">airports</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;iata&#39;</span><span class="p">,</span>
+                         <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span>
+    <span class="c1"># base map of the United States</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">usa</span><span class="p">,</span> <span class="s1">&#39;states&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+        <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#ddd&#39;</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#fff&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">),</span>
+    <span class="c1"># route lines from selected origin airport to destination airports</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">flights</span><span class="p">)</span><span class="o">.</span><span class="n">mark_rule</span><span class="p">(</span>
+        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#000&#39;</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.35</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+        <span class="n">origin</span> <span class="c1"># filter to selected origin only</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_lookup</span><span class="p">(</span>
+        <span class="n">lookup</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="n">foreign</span> <span class="c1"># origin lat/lon</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_lookup</span><span class="p">(</span>
+        <span class="n">lookup</span><span class="o">=</span><span class="s1">&#39;destination&#39;</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="n">foreign</span><span class="p">,</span> <span class="n">as_</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lat2&#39;</span><span class="p">,</span> <span class="s1">&#39;lon2&#39;</span><span class="p">]</span> <span class="c1"># dest lat/lon</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">longitude</span><span class="o">=</span><span class="s1">&#39;longitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">latitude2</span><span class="o">=</span><span class="s1">&#39;lat2&#39;</span><span class="p">,</span>
+        <span class="n">longitude2</span><span class="o">=</span><span class="s1">&#39;lon2&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="c1"># size airports by number of outgoing routes</span>
+    <span class="c1"># 1. aggregate flights-airport data set</span>
+    <span class="c1"># 2. lookup location data from airports data set</span>
+    <span class="c1"># 3. remove Puerto Rico (PR) and Virgin Islands (VI)</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">flights</span><span class="p">)</span><span class="o">.</span><span class="n">mark_circle</span><span class="p">()</span><span class="o">.</span><span class="n">transform_aggregate</span><span class="p">(</span>
+        <span class="n">groupby</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;origin&#39;</span><span class="p">],</span>
+        <span class="n">routes</span><span class="o">=</span><span class="s1">&#39;count()&#39;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_lookup</span><span class="p">(</span>
+        <span class="n">lookup</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span>
+        <span class="n">from_</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">LookupData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">airports</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;iata&#39;</span><span class="p">,</span>
+                             <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;longitude&#39;</span><span class="p">])</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span>
+        <span class="s1">&#39;datum.state !== &quot;PR&quot; &amp;&amp; datum.state !== &quot;VI&quot;&#39;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">add_selection</span><span class="p">(</span>
+        <span class="n">origin</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">latitude</span><span class="o">=</span><span class="s1">&#39;latitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">longitude</span><span class="o">=</span><span class="s1">&#39;longitude:Q&#39;</span><span class="p">,</span>
+        <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;origin:N&#39;</span><span class="p">,</span> <span class="s1">&#39;routes:Q&#39;</span><span class="p">],</span>
+        <span class="n">size</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Size</span><span class="p">(</span><span class="s1">&#39;routes:Q&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+        <span class="n">order</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Order</span><span class="p">(</span><span class="s1">&#39;routes:Q&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;descending&#39;</span><span class="p">)</span> <span class="c1"># place smaller circles on top</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Passe o mouse sobre o mapa para explorar a rede de voos!</p>
+</section>
+<section id="mapa-coropletico">
+<h2><font color="gray">7.5</font> Mapa Coroplético<a class="headerlink" href="#mapa-coropletico" title="Link to this heading">#</a></h2>
+<hr class="docutils" />
+<p>Um <a class="reference external" href="https://pt.wikipedia.org/wiki/Mapa_coropl%C3%A9tico">mapa coroplético</a> usa regiões sombreadas ou texturizadas para visualizar valores de dados. Mapas com símbolos dimensionados costumam ser mais precisos para leitura, pois as pessoas tendem a estimar melhor as diferenças proporcionais entre as áreas de círculos do que entre tonalidades de cores. No entanto, os mapas coropléticos são populares na prática e particularmente úteis quando muitos símbolos tornam-se perceptivamente excessivos.</p>
+<p>Por exemplo, embora os Estados Unidos tem apenas 50 estados, há milhares de condados dentro desses estados. Vamos construir um mapa coroplético da taxa de desemprego por condado, no ano da recessão de 2008. Em alguns casos, os arquivos de entrada GeoJSON ou TopoJSON podem incluir dados estatísticos que podemos visualizar diretamente. Neste caso, no entanto, temos dois arquivos: nosso arquivo TopoJSON, que inclui os limites dos condados (<code class="docutils literal notranslate"><span class="pre">usa</span></code>), e um arquivo de texto separado que contém as estatísticas de desemprego.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unemp</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">unemployment</span><span class="o">.</span><span class="n">url</span>
+<span class="n">unemp</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Para integrar nossas fontes de dados, precisaremos novamente usar a transformação de busca (<code class="docutils literal notranslate"><span class="pre">lookup</span></code>), enriquecendo nossos dados geoespaciais (<code class="docutils literal notranslate"><span class="pre">geoshape</span></code>) baseados em TopoJSON com as taxas de desemprego. Em seguida, podemos criar um mapa que inclua uma codificação de cores (<code class="docutils literal notranslate"><span class="pre">color</span></code>) para o campo de taxa (<code class="docutils literal notranslate"><span class="pre">rate</span></code>) recuperado.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">usa</span><span class="p">,</span> <span class="s1">&#39;counties&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;#aaa&#39;</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mf">0.25</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_lookup</span><span class="p">(</span>
+    <span class="n">lookup</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">LookupData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">unemp</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rate&#39;</span><span class="p">])</span>
+<span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;rate:Q&#39;</span><span class="p">,</span>
+              <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span> <span class="n">clamp</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+              <span class="n">legend</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Legend</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%&#39;</span><span class="p">)),</span>
+    <span class="n">alt</span><span class="o">.</span><span class="n">Tooltip</span><span class="p">(</span><span class="s1">&#39;rate:Q&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;.0%&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">project</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Examine as taxas de desemprego por condado. Valores mais altos em Michigan podem estar relacionados à indústria automotiva. Condados nas <a class="reference external" href="https://pt.wikipedia.org/wiki/Grandes_Plan%C3%ADcies">Grandes Planícies</a> e nos estados das Montanhas apresentam tanto taxas baixas <strong>quanto</strong> altas. Essa variação é significativa ou possivelmente um <a class="reference external" href="https://medium.com/&#64;uwdata/surprise-maps-showing-the-unexpected-e92b67398865">artefato de tamanhos amostrais menores</a>? Para explorar mais, tente alterar o limite superior da escala (por exemplo, para <code class="docutils literal notranslate"><span class="pre">0.2</span></code>) para ajustar o mapeamento de cores.</em></p>
+<p>Uma preocupação central nos mapas coropléticos é a escolha das cores. Acima, usamos o esquema padrão <code class="docutils literal notranslate"><span class="pre">yellowgreenblue</span></code> do Altair para mapas de calor. Abaixo, comparamos outros esquemas, incluindo um esquema <em>sequencial de tom único</em> (<code class="docutils literal notranslate"><span class="pre">teals</span></code>), que varia apenas em luminância; um esquema <em>sequencial multi-matiz</em> (<code class="docutils literal notranslate"><span class="pre">viridis</span></code>), que varia tanto em luminância quanto em matiz; e um esquema <em>divergente</em> (<code class="docutils literal notranslate"><span class="pre">blueorange</span></code>), que usa um ponto médio branco.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Função utilitária para gerar uma especificação de mapa para um esquema de cores fornecido.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">map_</span><span class="p">(</span><span class="n">scheme</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">()</span><span class="o">.</span><span class="n">mark_geoshape</span><span class="p">()</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s1">&#39;rate:Q&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="n">scheme</span><span class="p">),</span> <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">305</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span>
+    <span class="n">map_</span><span class="p">(</span><span class="s1">&#39;tealblues&#39;</span><span class="p">),</span> <span class="n">map_</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">),</span> <span class="n">map_</span><span class="p">(</span><span class="s1">&#39;blueorange&#39;</span><span class="p">),</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">topo_feature</span><span class="p">(</span><span class="n">usa</span><span class="p">,</span> <span class="s1">&#39;counties&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">transform_lookup</span><span class="p">(</span>
+    <span class="n">lookup</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">LookupData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">unemp</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rate&#39;</span><span class="p">])</span>
+<span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span>
+    <span class="n">stroke</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span><span class="o">.</span><span class="n">resolve_scale</span><span class="p">(</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;independent&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Quais esquemas de cores você considera mais eficaz? Por que isso pode acontecer? Modifique os mapas acima para usar outros esquemas disponíveis, conforme descrito na <a class="reference external" href="https://vega.github.io/vega/docs/schemes/">documentação dos Esquemas de Cores do Vega</a>.</em></p>
+</section>
+<section id="projecoes-cartograficas">
+<h2><font color="gray">7.6</font> Projeções Cartográficas<a class="headerlink" href="#projecoes-cartograficas" title="Link to this heading">#</a></h2>
+<hr class="docutils" />
+<p>Agora que temos alguma experiência na criação de mapas, vamos analisar mais de perto as projeções cartográficas. Conforme explicado pela <a class="reference external" href="https://pt.wikipedia.org/wiki/Proje%C3%A7%C3%A3o_cartogr%C3%A1fica">Wikipédia</a>.</p>
+<blockquote>
+<div><p><font color="gray"> <em>Todas as projeções cartográficas necessariamente distorcem a superfície de alguma forma. Dependendo do propósito do mapa, algumas distorções são aceitáveis e outras não são; portanto, diferentes projeções cartográficas existem para preservar algumas propriedades do corpo esférico em detrimento de outras propriedades.</em></p>
+</div></blockquote>
+<p>Algumas das propriedades que podemos querer considerar incluem:</p>
+<ul class="simple">
+<li><p><em>Área</em>: A projeção distorce o tamanho das regiões?</p></li>
+<li><p><em>Rumo</em>: Uma linha reta corresponde a uma direção de viagem constante?</p></li>
+<li><p><em>Distância</em>: Linhas de comprimento igual correspondem a distâncias iguais no globo?</p></li>
+<li><p><em>Forma</em>: A projeção preserva as relações espaciais (ângulos) entre os pontos?</p></li>
+</ul>
+<p>A seleção de uma projeção apropriada depende do caso de uso do mapa. Por exemplo, se estivermos analisando o uso da terra e a extensão das áreas for relevante, podemos escolher uma projeção que preserve a área. Se quisermos visualizar ondas de choque emanando de um terremoto, podemos centralizar o mapa no epicentro do tremor e preservar as distâncias a partir desse ponto. Já se o objetivo for auxiliar a navegação, a preservação do rumo e da forma pode ser mais importante.</p>
+<p>Também podemos caracterizar as projeções com base na <em>superfície de projeção</em>. As projeções cilíndricas, por exemplo, projetam os pontos da superfície da esfera em um cilindro circundante; ao “desenrolar” o cilindro obtemos o nosso mapa. Como descreveremos a seguir, podemos alternativamente projetar sobre a superfície de um cone (projeções cônicas) ou diretamente em um plano plano (projeções azimutais).</p>
+<p><em>Vamos primeiro desenvolver nossa intuição interagindo com uma variedade de projeções! <a class="reference external" href="https://observablehq.com/&#64;vega/vega-lite-cartographic-projections">Abra o notebook online de Projeções Cartográficas do Vega-Lite</a>. Use os controles nessa página para selecionar uma projeção e explorar seus parâmetros, como <code class="docutils literal notranslate"><span class="pre">scale</span></code> (escala ou zoom) e translação x/y (panorâmica). Os controles de rotação (<a class="reference external" href="https://pt.wikipedia.org/wiki/Eixos_do_avi%C3%A3o">eixo lateral, longitudinal e vertical</a>) determinam a orientação do globo em relação à superfície sobre a qual está sendo projetado.</em></p>
+<section id="um-tour-pelos-tipos-especificos-de-projecoes">
+<h3><font color="gray">7.6.1 </font> Um Tour pelos Tipos Específicos de Projeções<a class="headerlink" href="#um-tour-pelos-tipos-especificos-de-projecoes" title="Link to this heading">#</a></h3>
+<p>As <a class="reference external" href="https://jjallaire.github.io/visualization-curriculum/altair_cartographic.html">projeções cilíndricas</a> mapeiam a esfera para um cilindro circundante e, em seguida, “desenrolam” o cilindro. Se o eixo principal do cilindro estiver orientado no sentido norte-sul, os meridianos são mapeados como linhas retas. As projeções <a class="reference external" href="https://en.wikipedia.org/wiki/Map_projection#Pseudocylindrical">pseudo-cilíndricas</a> representam um meridiano central como uma linha reta, com outros meridianos “curvando-se” para longe do centro.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">minimap</span> <span class="o">=</span> <span class="nb">map</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">225</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">225</span><span class="p">)</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;equirectangular&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;equirectangular&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;mercator&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;mercator&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;transverseMercator&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;transverseMercator&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;naturalEarth1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;naturalEarth1&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span><span class="n">stroke</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Equirectangular_projection">Equirectangular</a> (<code class="docutils literal notranslate"><span class="pre">equirectangular</span></code>): Escala os valores das coordenadas de latitude (<code class="docutils literal notranslate"><span class="pre">lat</span></code>) e longitude diretamente (<code class="docutils literal notranslate"><span class="pre">lon</span></code>).</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Mercator_projection">Mercator</a> (<code class="docutils literal notranslate"><span class="pre">mercator</span></code>): Projeta sobre um cilindro, utilizando a longitude (<code class="docutils literal notranslate"><span class="pre">lon</span></code>) diretamente, mas submetendo a latitude (<code class="docutils literal notranslate"><span class="pre">lat</span></code>) a uma transformação não linear. Linhas retas preservam rumos constantes (<a class="reference external" href="https://en.wikipedia.org/wiki/Rhumb_line">linhas de rhumb</a>), tornando essa projeção bem adequada para navegação. No entanto, áreas no extremo norte ou sul podem ser grandemente distorcidas.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Transverse_Mercator_projection">Transversa de Mercator</a> (<code class="docutils literal notranslate"><span class="pre">transverseMercator</span></code>): Uma projeção Mercator, mas com o cilindro de contorno rotacionado para um eixo transversal. Enquanto a projeção Mercator padrão tem maior precisão ao longo do equador, a projeção Transversa de Mercator é mais precisa ao longo do meridiano central.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Natural_Earth_projection">Terra Natural</a> (<code class="docutils literal notranslate"><span class="pre">naturalEarth1</span></code>): Uma projeção pseudo-cilíndrica projetada para mostrar o mundo todo em uma única visualização.</p></li>
+</ul>
+<p>As <a class="reference external" href="https://en.wikipedia.org/wiki/Map_projection#Conic">projeções cônicas</a> mapeiam a esfera para um cone e, em seguida, “desenrolam” o cone para o plano. As projeções cônicas são configuradas por dois <em>paralelos padrão</em>, que determinam onde o cone intersecta o globo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">minimap</span> <span class="o">=</span> <span class="nb">map</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;conicEqualArea&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;conicEqualArea&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;conicEquidistant&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;conicEquidistant&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;conicConformal&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">translate</span><span class="o">=</span><span class="p">[</span><span class="mi">90</span><span class="p">,</span><span class="mi">65</span><span class="p">])</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;conicConformal&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albers&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;albers&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;albersUsa&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span><span class="n">stroke</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Albers_projection">Cônica de Área Preservada</a> (<code class="docutils literal notranslate"><span class="pre">conicEqualArea</span></code>): Projeção cônica que preserva a área. A forma e a distância não são preservadas, mas a precisão é razoável dentro dos paralelos padrão.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Equidistant_conic_projection">Cônica Equidistante</a> (<code class="docutils literal notranslate"><span class="pre">conicEquidistant</span></code>): Projeção cônica que preserva a distância ao longo dos meridianos e paralelos padrão.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Lambert_conformal_conic_projection">Cônica Conforme</a> (<code class="docutils literal notranslate"><span class="pre">conicConformal</span></code>): Projeção cônica que preserva a forma (ângulos locais), mas não a área ou a distância.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Albers_projection">Albers</a> (<code class="docutils literal notranslate"><span class="pre">albers</span></code>): Uma variante da projeção cônica de área preservada, com paralelos padrão otimizados para criar mapas dos Estados Unidos.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Albers_projection">Albers EUA</a> (<code class="docutils literal notranslate"><span class="pre">albersUsa</span></code>): Uma projeção híbrida para os 50 estados dos Estados Unidos da América. Esta projeção une três projeções Albers com parâmetros diferentes para os EUA continentais, Alasca e Havai.</p></li>
+</ul>
+<p>As <a class="reference external" href="https://en.wikipedia.org/wiki/Map_projection#Azimuthal_%28projections_onto_a_plane%29"><strong>projeções azimutais</strong></a> mapeiam a esfera diretamente em um plano.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">minimap</span> <span class="o">=</span> <span class="nb">map</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;azimuthalEqualArea&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;azimuthalEqualArea&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;azimuthalEquidistant&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;azimuthalEquidistant&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;orthographic&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;orthographic&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;stereographic&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;stereographic&#39;</span><span class="p">),</span>
+    <span class="n">minimap</span><span class="o">.</span><span class="n">project</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;gnomonic&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;gnomonic&#39;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">configure_view</span><span class="p">(</span><span class="n">stroke</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Lambert_azimuthal_equal-area_projection">Azimutal de Área Preservada</a> (<code class="docutils literal notranslate"><span class="pre">azimuthalEqualArea</span></code>): Projeta com precisão a área em todas as partes do globo, mas não preserva a forma (ângulos locais).</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Azimuthal_equidistant_projection">Azimutal Equidistante</a> (<code class="docutils literal notranslate"><span class="pre">azimuthalEquidistant</span></code>): Preserva a distância proporcional do centro da projeção para todos os outros pontos no globo.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Orthographic_map_projection">Ortográfica</a> (<code class="docutils literal notranslate"><span class="pre">orthographic</span></code>): Projeta um hemisfério visível para um plano distante. Aproximadamente corresponde a uma visão da Terra do espaço exterior.</p></li>
+<li><p><a class="reference external" href="https://pt.wikipedia.org/wiki/Proje%C3%A7%C3%A3o_estereogr%C3%A1fica">Estereográfica</a> (<code class="docutils literal notranslate"><span class="pre">stereographic</span></code>): Preserva a forma, mas não a área ou a distância.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Gnomonic_projection">Gnomômica</a> (<code class="docutils literal notranslate"><span class="pre">gnomonic</span></code>): Projeta a superfície da esfera diretamente para um plano tangente. <a class="reference external" href="https://en.wikipedia.org/wiki/Great_circle">Círculos máximos</a> ao redor da Terra são projetados como linhas retas, mostrando o caminho mais curto entre os pontos.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="6_interaction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">6. Interação</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="debugging.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Guia de Depuração para Altair</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#marcas-de-geoforma"><font color="gray">7.2</font> Marcas de Geoforma</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-pontos">7.3. Mapas de Pontos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapas-de-simbolos"><font color="gray">7.4</font> Mapas de Símbolos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapa-coropletico"><font color="gray">7.5</font> Mapa Coroplético</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#projecoes-cartograficas"><font color="gray">7.6</font> Projeções Cartográficas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#um-tour-pelos-tipos-especificos-de-projecoes"><font color="gray">7.6.1 </font> Um Tour pelos Tipos Específicos de Projeções</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
